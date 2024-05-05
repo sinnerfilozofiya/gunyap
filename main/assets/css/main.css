@@ -1298,7 +1298,10 @@ section {
 
 .team .member .member-img {
   margin: 0 80px;
-  border-radius: 50%;
+  border-radius: 1%;
+  border-style: solid; /* Set the border style to solid */
+  border-color: #000; /* Set the border color to black */
+  border-width: 1px; /* Set the border width */
   overflow: hidden;
   position: relative;
 }
