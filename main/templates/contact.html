@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>UpConstruction Bootstrap Template - Contact</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css'  %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css'  %}" rel="stylesheet">
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css'  %}" rel="stylesheet">
+  <link href="{% static 'vendor/aos/aos.css'  %}" rel="stylesheet">
+  <link href="{% static 'vendor/glightbox/css/glightbox.min.css'  %}" rel="stylesheet">
+  <link href="{% static 'vendor/swiper/swiper-bundle.min.css'  %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/main.css'  %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: UpConstruction
+  * Template URL: https://bootstrapmade.com/upconstruction-bootstrap-construction-website-template/
+  * Updated: Mar 17 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="{% url 'home' %}" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="{% static 'img/logo.png' %}" alt=""> -->
+        <h1>Günyap Grup<span>.</span></h1>
+      </a>
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url 'home' %}">ANASAYFA</a></li>
+          <li><a href="{% url 'about' %}">HAKKIMIZDA</a></li>
+          <li><a href="{% url 'services' %}">HİZMETLER</a></li>
+          <li><a href="{% url 'projects' %}">PROJELER</a></li>
+          <li><a href="{% url 'contact' %}"class="active">İLETİŞİM</a></li>
+        </ul>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static 'img/breadcrumbs-bg.jpg'  %}');">
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+          <div class="col-lg-6">
+            <div class="info-item  d-flex flex-column justify-content-center align-items-center">
+              <i class="bi bi-map"></i>
+              <h3>Adres</h3>
+              <p> İstasyon Mahallesi, 1493/1 Sokak No:27/A Gebze/KOCAELİ</p>
+            </div>
+          </div><!-- End Info Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="info-item d-flex flex-column justify-content-center align-items-center">
+              <i class="bi bi-envelope"></i>
+              <h3>Email</h3>
+              <p>info@gunyapgrup.com.tr</p>
+            </div>
+          </div><!-- End Info Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="info-item  d-flex flex-column justify-content-center align-items-center">
+              <i class="bi bi-telephone"></i>
+              <h3>İletişim</h3>
+              <p>+90 262 655 10 12</p>
+            </div>
+          </div><!-- End Info Item -->
+
+        </div>
+
+        <div class="row gy-4 mt-1">
+
+          <div class="col-lg-6 ">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.2040987011133!2d29.42062807571408!3d40.77952693347942!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cb2074bcc869bb%3A0x389c27f0b19d85ef!2zQWJkaSDEsHBla8OnaSwgMTQ5My8xLiBTay4gTm86MjcgRDphLCA0MTcwMCBEYXLEsWNhL0tvY2FlbGk!5e0!3m2!1str!2str!4v1714681118780!5m2!1str!2str" frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe> 
+          </div><!-- End Google Maps -->
+
+          <div class="col-lg-6">
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <div class="row gy-4">
+                <div class="col-lg-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Ad" required>
+                </div>
+                <div class="col-lg-6 form-group">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Soyad" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Konu" required>
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" name="message" rows="5" placeholder="Mesaj" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Yükleniyor</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Mesajınız Alındı</div>
+              </div>
+              <div class="text-center"><button type="submit">Mesaj Gönder</button></div>
+            </form>
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  {% include 'footer.html' %}
+ 
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'  %}"></script>
+  <script src="{% static 'vendor/aos/aos.js'  %}"></script>
+  <script src="{% static 'vendor/glightbox/js/glightbox.min.js'  %}"></script>
+  <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js'  %}"></script>
+  <script src="{% static 'vendor/swiper/swiper-bundle.min.js'  %}"></script>
+  <script src="{% static 'vendor/purecounter/purecounter_vanilla.js'  %}"></script>
+  <script src="{% static 'vendor/php-email-form/validate.js'  %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'js/main.js'  %}"></script>
+
+</body>
+
+</html>

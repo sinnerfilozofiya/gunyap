@@ -1,0 +1,47 @@
+<footer id="footer" class="footer">
+    <div class="footer-content position-relative">
+      <div class="container">
+        <div class="row">      
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-info">
+              <h3>Günyap Grup</h3>
+              <p>
+                İstasyon Mahallesi, 1493/1 Sokak No:27/A<br>
+                Gebze/KOCAELİ<br><br>
+                <strong>İletişim:</strong> +90 262 655 10 1<br>
+                <strong>Email:</strong> info@gunyapgrup.com.tr<br>
+              </p>
+              <div class="social-links d-flex mt-3">
+                {% for hesap in hesaplar %}
+                    {% if hesap.ad == 'Facebook' and hesap.baglanti %}
+                        <a href="{{ hesap.baglanti }}" class="d-flex align-items-center justify-content-center"><i class="bi bi-facebook"></i></a>
+                    {% elif hesap.ad == 'Facebook' and not hesap.baglanti %}
+                        <a href="#" class="d-flex align-items-center justify-content-center"><i class="bi bi-facebook"></i></a>
+                    {% elif hesap.ad == 'Instagram' and hesap.baglanti %}
+                        <a href="{{ hesap.baglanti }}" class="d-flex align-items-center justify-content-center"><i class="bi bi-instagram"></i></a>
+                    {% elif hesap.ad == 'Instagram' and not hesap.baglanti %}
+                        <a href="#" class="d-flex align-items-center justify-content-center"><i class="bi bi-instagram"></i></a>
+                    {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div><!-- End footer info column-->
+
+         
+
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-legal text-center position-relative">
+      <div class="container">
+        <div class="copyright">
+          Copyright &copy;<strong><span> Günyap Grup</span></strong>.Tüm Hakları Saklıdır
+        </div>
+        <div class="credits">
+          Designed by <a href="https://www.linkedin.com/in/melisa-ayd%C4%B1nc%C4%B1-b522a11b2/">Melisa Aydıncı</a>
+        </div>
+      </div>
+    </div>
+
+  </footer>
