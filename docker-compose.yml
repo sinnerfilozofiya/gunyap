@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  django:
+    build: .
+    # ports:
+    #   - "8000:8000"
+    volumes:
+      - .:/app
+      - db_volume:/app/main/db_backup
+    command: python main/manage.py runserver 0.0.0.0:8000
+
+    network_mode: host
+    restart: always
+
+volumes:
+  db_volume:
