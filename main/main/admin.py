@@ -7,7 +7,8 @@ class CustomAdminSite(admin.AdminSite):
             'Kurumsal':2,
             'Proje':3,
             'Hizmet':4,
-            'Hesap':5
+            'Kariyer':5,
+            'Hesap':6,
         }
         app_dict = super().get_app_list(request)
         sorted_apps = sorted(app_dict, key=lambda x: ordering.get(x['name'], 0))

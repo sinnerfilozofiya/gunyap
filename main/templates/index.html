@@ -56,8 +56,10 @@
         <ul>
           <li><a href="{% url 'home' %}" class="active">ANASAYFA</a></li>
           <li><a href="{% url 'about' %}">HAKKIMIZDA</a></li>
-          <li><a href="{% url 'services' %}">HİZMETLER</a></li>
+          <li><a href="{% url 'services' %}">FAALİYET ALANLARI</a></li>
+          <li><a href="{% url 'documents' %}">BELGELER</a></li>
           <li><a href="{% url 'projects' %}">PROJELER</a></li>
+          <li><a href="{% url 'career' %}">KARİYER</a></li>
           <li><a href="{% url 'contact' %}">İLETİŞİM</a></li>
         </ul>
       </nav><!-- .navbar -->
@@ -72,8 +74,8 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-6 text-center">
-            <h2 data-aos="fade-down">Günyap Gruba <span>Hoşgeldiniz</span></h2>
-            <p data-aos="fade-up">Açıklama</p>
+            <h2 data-aos="fade-down">{{slogan.tanim}}</h2>
+            <p data-aos="fade-up">{{slayt_tanim.tanim}}</p>
             <a data-aos="fade-up" data-aos-delay="200" href="#services" class="btn-get-started">Başla</a>
           </div>
         </div>
@@ -106,7 +108,7 @@
       <div class="container" data-aos="fade-up">
         <div class="section-header">
           <h2>Hizmetlerimiz</h2>
-          <p>Açıklama</p>
+          <p>{{hizmet_tanim.tanim}}</p>
         </div>
 
         <div class="row gy-4">
@@ -133,7 +135,7 @@
 
         <div class="section-header">
           <h2>Projelerimiz</h2>
-          <p>Açıklama</p>
+          <p>{{proje_tanim.tanim}}</p>
         </div>
 
         <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order">

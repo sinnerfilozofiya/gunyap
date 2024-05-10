@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'hizmet.apps.HizmetConfig',
     'kurumsal.apps.KurumsalConfig',
-    'hesap.apps.HesapConfig'
+    'hesap.apps.HesapConfig',
+    'kariyer.apps.KariyerConfig',
 
 ]
 

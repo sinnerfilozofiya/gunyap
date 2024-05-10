@@ -7,6 +7,14 @@ from django.core.validators import MaxLengthValidator
 def service_directory_path(instance,filename):
     return f'hizmetler/{filename}'
 
+
+class HizmetAçıklama(models.Model):
+    tanim = models.TextField(blank=True, null=True)
+    def __str__(self):
+        return f"Açıklama"
+    
+   
+
 class Hizmet(models.Model):
     ad = models.CharField(max_length=200, unique=True,null=False)
     tanim = models.TextField(blank=True, null=True)

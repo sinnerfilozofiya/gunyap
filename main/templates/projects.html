@@ -57,8 +57,10 @@
         <ul>
           <li><a href="{% url 'home' %}">ANASAYFA</a></li>
           <li><a href="{% url 'about' %}">HAKKIMIZDA</a></li>
-          <li><a href="{% url 'services' %}">HİZMETLER</a></li>
+          <li><a href="{% url 'services' %}">FAALİYET ALANLARI</a></li>
+          <li><a href="{% url 'documents' %}">BELGELER</a></li>
           <li><a href="{% url 'projects' %}"class="active">PROJELER</a></li>
+          <li><a href="{% url 'career' %}">KARİYER</a></li>
           <li><a href="{% url 'contact' %}">İLETİŞİM</a></li>
         </ul>
       </nav><!-- .navbar -->
@@ -80,7 +82,7 @@
       <div class="container" data-aos="fade-up">
         <div class="section-header">
           <h2>Projelerimiz</h2>
-          <p>Açıklama</p>
+          <p>{{proje_tanim.tanim}}</p>
         </div>
         <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order">
           <ul class="portfolio-flters" data-aos="fade-up" data-aos-delay="100">

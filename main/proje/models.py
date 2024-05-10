@@ -7,6 +7,11 @@ def proje_directory_path(instance,filename):
     proje_adı = instance.proje.baslik
     return f'projects/{proje_adı}/{filename}'
 
+class ProjeAçıklama(models.Model):
+    tanim = models.TextField(blank=True, null=True)
+    def __str__(self):
+        return f"Açıklama"
+    
 class Proje(models.Model):
     ad = models.CharField(max_length=200, unique=True,null=False,default="Proje Adı")
     aciklama = models.TextField(blank=True, null=True)
