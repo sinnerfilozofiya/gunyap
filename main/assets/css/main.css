@@ -32,6 +32,23 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+@font-face {
+  font-family: 'CustomFont';
+  src: url('../00287.TTF') format('truetype'); /* Adjust path and format as needed */
+}
+
+.custom-font {
+  font-family: 'CustomFont', sans-serif;
+}
+
+h1.custom-font {
+  font-family: 'CustomFont', sans-serif;
+}
+
+p.custom-font {
+  font-family: 'CustomFont', sans-serif;
+}
+
 body {
   font-family: var(--font-default);
   color: var(--color-default);
