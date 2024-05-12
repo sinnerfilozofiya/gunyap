@@ -19,10 +19,9 @@ class HizmetAdmin(admin.ModelAdmin):
     list_display=['ad','baslik','tanim',]
     exclude = ('baslik',)
 
-admin.site.site_header = "Melisa-Sina"
+
 admin.site.register(Hizmet,HizmetAdmin)
 admin.site.register(HizmetAçıklama,AçıklamaAdmin)
 Hizmet._meta.verbose_name_plural = "Hizmetler"
-HizmetAçıklama._meta.verbose_name='Açıklama'
 HizmetAçıklama._meta.verbose_name_plural = "Açıklama"
 

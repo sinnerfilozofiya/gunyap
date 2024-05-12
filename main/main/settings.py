@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'kurumsal.apps.KurumsalConfig',
     'hesap.apps.HesapConfig',
     'kariyer.apps.KariyerConfig',
+    'mesaj.apps.MesajConfig'
 
 ]
 

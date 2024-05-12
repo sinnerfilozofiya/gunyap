@@ -3,9 +3,11 @@ from django.shortcuts import render
 from hizmet.models import Hizmet,HizmetAçıklama
 from proje.models import Proje,ProjeAçıklama
 from slayt.models import Slayt,Slogan,SlaytAçıklama
-from kurumsal.models import BizKimiz,Misyonumuz,Vizyonumuz,Belge
+from kurumsal.models import BizKimiz,Misyonumuz,Vizyonumuz,Belge,Sayaç
 from hesap.models import Hesap
-from kariyer.models import KariyerAçıklama
+from kariyer.models import KariyerAçıklama,KariyerGörsel
+from .form import ContactForm
+from mesaj.models import Mesaj
 
 def home_page(request):
     services=Hizmet.objects.all()
@@ -31,13 +33,15 @@ def about_page(request):
     bizkimiz=BizKimiz.objects.all().first()
     misyonumuz=Misyonumuz.objects.all().first()
     vizyonumuz=Vizyonumuz.objects.all().first()
+    sayac=Sayaç.objects.all().first()
     belgeler=Belge.objects.all()
     hesaplar=Hesap.objects.all()
     context={'bizkimiz':bizkimiz,
              'misyonumuz':misyonumuz,
              'vizyonumuz':vizyonumuz,
              'belgeler':belgeler,
-             'hesaplar':hesaplar
+             'hesaplar':hesaplar,
+             'sayac':sayac
             }
     return render(request,'about.html',context=context)
 def services_page(request):
@@ -60,10 +64,29 @@ def projects_page(request):
              'proje_tanim':proje_tanim}
     return render(request,'projects.html',context=context)
 def contact_page(request):
-    hesaplar=Hesap.objects.all()
-    context={'hesaplar':hesaplar
+        if request.method == 'POST':
+            print("posta girdin")
+            form = ContactForm(request.POST)
+            if form.is_valid():
+                print("forma girdin")
+                # Form verilerini işleyin
+                name = form.cleaned_data['name']
+                email = form.cleaned_data['email']
+                phone = form.cleaned_data['phone']
+                subject = form.cleaned_data['subject']
+                message = form.cleaned_data['message']
+                mesaj = Mesaj.objects.create(
+                        gönderen=name,
+                        mail=email,
+                        telefon=phone,
+                        konu=subject,
+                        mesaj=message,
+                    )
+                mesaj.save()
+        hesaplar=Hesap.objects.all()
+        context={'hesaplar':hesaplar
              }
-    return render(request,'contact.html',context=context)
+        return render(request,'contact.html',context=context)
 
 def documents_page(request):
     belgeler=Belge.objects.all()
@@ -74,7 +97,9 @@ def documents_page(request):
 
 def career_page(request):
     kariyer_tanim=KariyerAçıklama.objects.all().first()
+    kariyer_resmi=KariyerGörsel.objects.all().first()
     context={            
              'kariyer_tanim':kariyer_tanim,
+             'kariyer_resmi':kariyer_resmi
             }
     return render(request,'career.html',context=context)

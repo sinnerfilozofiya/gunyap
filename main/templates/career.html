@@ -39,7 +39,7 @@
       <a href="{% url 'home' %}" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="{% static  'img/logo.png' %}" alt=""> -->
-        <h1>Günyap Grup<span>.</span></h1>
+        <div class="custom-font h1">Günyap Grup<span>.</span></div>
       </a>
 
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
@@ -64,16 +64,24 @@
   <!-- ======= Breadcrumbs ======= -->
     <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static  'img/breadcrumbs-bg.jpg' %}');">
     </div><!-- End Breadcrumbs -->
+    <section id="alt-services" class="alt-services">
+      <div class="container" data-aos="fade-up">
 
-    <section class="sample-page">
-      <div class="container">
-
-        <p>
-          {{kariyer_tanim.tanim}}
-        </p>
+        <div class="row justify-content-around gy-4">
+          
+          <div class="col-lg-6 img-bg" style="background-image: url( {{kariyer_resmi.image.url}});" data-aos="zoom-in" data-aos-delay="100"></div>
+          <div class="col-lg-5 d-flex flex-column ">
+            <h3>Kariyer</h3>  
+            <p>
+              {{kariyer_tanim.tanim}}
+            </p>
+          </div>
+          
+        </div>
 
       </div>
-    </section>
+    </section><!-- End Alt Services Section -->
+
     <br><br><br><br>
   </main><!-- End #main -->
 

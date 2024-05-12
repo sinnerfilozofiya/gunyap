@@ -8,7 +8,8 @@ class CustomAdminSite(admin.AdminSite):
             'Proje':3,
             'Hizmet':4,
             'Kariyer':5,
-            'Hesap':6,
+            'Mesaj':6,
+            'Hesap':7,
         }
         app_dict = super().get_app_list(request)
         sorted_apps = sorted(app_dict, key=lambda x: ordering.get(x['name'], 0))
@@ -17,3 +18,4 @@ class CustomAdminSite(admin.AdminSite):
 
 admin_site = CustomAdminSite()
 admin.site=admin_site
+admin.site.site_header = "Günyap Grup"

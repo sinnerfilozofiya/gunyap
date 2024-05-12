@@ -47,7 +47,7 @@
       <a href="{% url 'home' %}" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="{% static  'img/logo.png' %}" alt=""> -->
-        <h1>Günyap Grup<span>.</span></h1>
+        <div class="custom-font h1">Günyap Grup<span>.</span></div>
       </a>
 
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
@@ -78,14 +78,19 @@
 
         <div class="row position-relative">
 
-          <div class="col-lg-7 about-img" style="background-image: url({% static  'img/about.jpg' %});"></div>
+          <div class="col-lg-7 about-img" style="background-image: url({{bizkimiz.image.url}});"></div>
 
           <div class="col-lg-7">
             <h2>HAKKIMIZDA</h2>
             <div class="our-story">
               <h3>Biz Kimiz?</h3>
-              <p><p>{{bizkimiz.tanim}}</p></p>
-               </div>
+              <p>{{bizkimiz.tanim}}</p>
+              <div class="watch-video d-flex align-items-center position-relative">
+                 <i class="bi bi-book"></i>
+                <a href="{{  bizkimiz.e_katalog.url  }}">E-Katalog</a>
+              </div>
+            </div>
+            
           </div>
 
         </div>
@@ -104,7 +109,7 @@
             <div class="stats-item d-flex align-items-center w-100 h-100">
               <i class="bi bi-emoji-smile color-blue flex-shrink-0"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
+                <span data-purecounter-start="0" data-purecounter-end="{{sayac.musteri}}" data-purecounter-duration="1" class="purecounter"></span>
                 <p>Mutlu Müşteri</p>
               </div>
             </div>
@@ -114,7 +119,7 @@
             <div class="stats-item d-flex align-items-center w-100 h-100">
               <i class="bi bi-journal-richtext color-orange flex-shrink-0"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
+                <span data-purecounter-start="0" data-purecounter-end="{{sayac.proje}}" data-purecounter-duration="1" class="purecounter"></span>
                 <p>Projeler</p>
               </div>
             </div>
@@ -124,7 +129,7 @@
             <div class="stats-item d-flex align-items-center w-100 h-100">
               <i class="bi bi-people color-pink flex-shrink-0"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
+                <span data-purecounter-start="0" data-purecounter-end="{{sayac.calisan}}" data-purecounter-duration="1" class="purecounter"></span>
                 <p>Çalışan</p>
               </div>
             </div>
@@ -140,7 +145,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="row justify-content-around gy-4">
-          <div class="col-lg-6 img-bg" style="background-image: url({% static  'img/alt-services.jpg' %});" data-aos="zoom-in" data-aos-delay="100"></div>
+          <div class="col-lg-6 img-bg" style="background-image: url( {{misyonumuz.image.url}});" data-aos="zoom-in" data-aos-delay="100"></div>
 
           <div class="col-lg-5 d-flex flex-column justify-content-center">
             <h3>Misyonumuz</h3>
@@ -182,7 +187,7 @@
             
           </div>
 
-          <div class="col-lg-6 img-bg" style="background-image: url({% static  'img/alt-services-2.jpg' %});" data-aos="zoom-in" data-aos-delay="100"></div>
+          <div class="col-lg-6 img-bg" style="background-image: url({{vizyonumuz.image.url}});" data-aos="zoom-in" data-aos-delay="100"></div>
         </div>
 
       </div>

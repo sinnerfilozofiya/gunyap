@@ -101,7 +101,7 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="section-header">
-          <h2>Hizmetlerimiz</h2>
+          <h2>Faaliyet Alanlarımız</h2>
           <p>{{hizmet_tanim.tanim}}</p>
         </div>
 
@@ -109,9 +109,8 @@
           {%for service in services%}
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="service-item  position-relative">
-              <div class="icon">
-                <i class="fa-solid fa-mountain-city"></i>
-              </div>
+              <img src="{{service.image.url}}" alt="{{service.ad}}" class="img-fluid services-img">
+              <br><br>
               <h3>{{service.ad}}</h3>
               <p>{{service.ozet}}</p>
               <a href="{% url 'service_detail' service.baslik %}" class="readmore stretched-link">Daha Fazlası <i class="bi bi-arrow-right"></i></a>
@@ -150,7 +149,7 @@
                             {% for resim in proje.resimler.all %}
                                 <a href="{{ resim.image.url }}" title="{{ proje.ad }}" data-gallery="portfolio-gallery-{{ proje.baslik }}" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                             {% endfor %}
-                                <a href="{% url 'project_details' proje.baslik %}" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                                <a href="{% url 'project_details' proje.baslik %}" title="Daha Fazlası" class="details-link"><i class="bi bi-link-45deg"></i></a>
                         </div>
                     </div>
                     <br>

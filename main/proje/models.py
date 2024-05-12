@@ -4,7 +4,8 @@ from hizmet.models import Hizmet
 
 
 def proje_directory_path(instance,filename):
-    proje_adı = instance.proje.baslik
+    proje_adı = instance.baslik
+    print(proje_adı)
     return f'projects/{proje_adı}/{filename}'
 
 class ProjeAçıklama(models.Model):
@@ -28,7 +29,7 @@ class Proje(models.Model):
             self.baslik = slugify(self.ad)
         super().save(*args, **kwargs)
 
-class ProjeImage(models.Model):
+class ProjeResim(models.Model):
     proje = models.ForeignKey(Proje, related_name='resimler', on_delete=models.CASCADE,null=True)
     image = models.ImageField(upload_to=proje_directory_path,null=True)
 

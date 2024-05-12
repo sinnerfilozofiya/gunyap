@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Proje,ProjeImage,ProjeAçıklama
+from .models import Proje,ProjeResim,ProjeAçıklama
 from main.admin import admin_site
 
 
 class ImageInline(admin.TabularInline):
-    model = ProjeImage
+    model = ProjeResim
     extra = 0
 
 
@@ -23,9 +23,9 @@ class ProjeAçıklamaAdmin(admin.ModelAdmin):
         return False
     
     
-admin.site.site_header = "Melisa-Sina"
+
 admin.site.register(Proje, ProjeAdmin)
 admin.site.register(ProjeAçıklama, ProjeAçıklamaAdmin)
-ProjeAçıklama._meta.verbose_name='Açıklama'
 ProjeAçıklama._meta.verbose_name_plural = "Açıklama"
 Proje._meta.verbose_name_plural = "Projeler"
+ProjeResim._meta.verbose_name_plural = "Proje Resimleri"
