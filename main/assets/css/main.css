@@ -723,6 +723,87 @@ section {
 /*--------------------------------------------------------------
 # Services Section
 --------------------------------------------------------------*/
+
+
+
+.pagination {
+  display: inline-flex; /* Centers the pagination within its container */
+  list-style-type: none; /* Removes default list styling */
+  padding: 0;
+}
+
+.pagination li {
+  margin: 0 2px; /* Adds a small space between pagination items */
+}
+
+.pagination .page-link {
+  color: #0c0c0c; /* Dark color for text for better contrast on yellow */
+  text-decoration: none; /* Removes underline from links */
+  background-color: white; /* Bootstrap yellow for links */
+  border: 1px solid #ffc107; /* Border color */
+}
+
+.pagination .active .page-link {
+  color: white;
+  background-color: #ffca2c; /* A slightly darker yellow for active link */
+  border-color: #ffca2c;
+}
+
+.pagination .disabled .page-link {
+  color: #6c757d;
+  pointer-events: none; /* Disables link interactions and events */
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+
+.image-container {
+  /* Limit the height of the image container */
+  height: 300px; /* Adjust this value as needed */
+  width: auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-container img {
+  /* Make the image fit within the container */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text-container {
+  /* Limit the height of the text container */
+  max-height: 150px; /* Adjust this value as needed */
+  overflow: hidden;
+}
+
+.text-container p {
+  /* Ensure text doesn't exceed the container */
+  margin: 0; /* Remove default margin */
+}
+
+.project-title {
+  /* Set a fixed height for the project title */
+  height: 70px; /* Adjust this value as needed */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add an ellipsis if text overflows */
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.text-container-project{
+  display: flex;
+  align-items: center; /* Aligns items vertically center, change to flex-start or flex-end as needed */
+  justify-content: center; /* Center horizontally, optional */
+}
+.text-container-project h4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limits the text to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 72px; /* Adjust based on your specific line-height and font-size */
+  line-height: 24px; /* Example line-height */
+}
+
 .services .service-item {
   padding: 40px;
   background: #fff;
@@ -1418,6 +1499,11 @@ section {
 /*--------------------------------------------------------------
 # Projet Details Section
 --------------------------------------------------------------*/
+.swiper-slide img {
+  max-width: 100%; /* Ensure images don't exceed the slide width */
+  height: auto; /* Maintain image aspect ratio */
+}
+
 .project-details .portfolio-details-slider img {
   width: 100%;
 }
@@ -1586,6 +1672,24 @@ section {
 /*--------------------------------------------------------------
 # Service Details Section
 --------------------------------------------------------------*/
+.img-wrapper {
+  /* Limit the height of the image container */
+  height: 200px; /* Adjust this value as needed */
+  overflow: hidden;
+  position: relative; /* Ensure position is set to relative for absolute positioning */
+}
+
+.img-wrapper img {
+  /* Make the image fit within the container */
+  max-width: 100%; /* Ensure the image doesn't exceed the width of its container */
+  max-height: 100%; /* Ensure the image doesn't exceed the height of its container */
+  width: auto; /* Allow the image to adjust its width based on container size */
+  height: auto; /* Allow the image to adjust its height based on container size */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .service-details .services-list {
   padding: 10px 30px;
   border: 1px solid #d5d7da;

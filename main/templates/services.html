@@ -65,7 +65,7 @@
     <!-- ======= Breadcrumbs ======= -->
     <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static  'img/breadcrumbs-bg.jpg'  %}');">
     </div><!-- End Breadcrumbs -->
-
+    
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
@@ -74,19 +74,29 @@
           <p>{{hizmet_tanim.tanim}}</p>
         </div>
         <div class="row gy-4">
-          {% for service in services%}
+          {% for service in services %}
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item  position-relative">
-              <img src="{{service.image.url}}" alt="{{service.ad}}" class="img-fluid services-img">
+            <div class="service-item position-relative">
+              <!-- Image container -->
+              <div class="image-container">
+                <img src="{{service.image.url}}" alt="{{service.ad}}" class="img-fluid services-img">
+              </div>
+              <!-- End of image container -->
               <br><br>
               <h3>{{service.ad}}</h3>
-              <p>{{service.ozet}}</p>
+              <!-- Text container -->
+              <div class="text-container">
+                <p>{{service.ozet}}</p>
+              </div>
+              <!-- End of text container -->
               <a href="{% url 'service_detail' service.baslik %}" class="readmore stretched-link">Daha Fazlası <i class="bi bi-arrow-right"></i></a>
             </div>
           </div><!-- End Service Item -->
           {% endfor %}
+        </div>
       </div>
-    </section><!-- End Services Section -->
+    </section>
+    <!-- End Services Section -->
 
     
 

@@ -8,26 +8,58 @@ from hesap.models import Hesap
 from kariyer.models import KariyerAçıklama,KariyerGörsel
 from .form import ContactForm
 from mesaj.models import Mesaj
+from django.core.paginator import Paginator
+
+# def home_page(request):
+#     services=Hizmet.objects.all()
+#     slayts=Slayt.objects.order_by('order')
+#     projects=Proje.objects.all()
+#     hesaplar=Hesap.objects.all()
+#     hizmet_tanim=HizmetAçıklama.objects.all().first()
+#     slogan=Slogan.objects.all().first()
+#     proje_tanim=ProjeAçıklama.objects.all().first()
+#     slayt_tanim=SlaytAçıklama.objects.all().first()
+#     context={'services':services,
+#              'slayts':slayts,
+#              'projects':projects,
+#              'hesaplar':hesaplar,
+#              'hizmet_tanim':hizmet_tanim,
+#              'proje_tanim':proje_tanim,
+#              'slogan':slogan,
+#              'slayt_tanim':slayt_tanim
+#             }
+#     return render(request,'index.html',context=context)
 
 def home_page(request):
-    services=Hizmet.objects.all()
-    slayts=Slayt.objects.order_by('order')
-    projects=Proje.objects.all()
-    hesaplar=Hesap.objects.all()
-    hizmet_tanim=HizmetAçıklama.objects.all().first()
-    slogan=Slogan.objects.all().first()
-    proje_tanim=ProjeAçıklama.objects.all().first()
-    slayt_tanim=SlaytAçıklama.objects.all().first()
-    context={'services':services,
-             'slayts':slayts,
-             'projects':projects,
-             'hesaplar':hesaplar,
-             'hizmet_tanim':hizmet_tanim,
-             'proje_tanim':proje_tanim,
-             'slogan':slogan,
-             'slayt_tanim':slayt_tanim
-            }
-    return render(request,'index.html',context=context)
+    services = Hizmet.objects.all()
+    slayts = Slayt.objects.order_by('order')
+    hesaplar = Hesap.objects.all()
+    hizmet_tanim = HizmetAçıklama.objects.all().first()
+    slogan = Slogan.objects.all().first()
+    proje_tanim = ProjeAçıklama.objects.all().first()
+    slayt_tanim = SlaytAçıklama.objects.all().first()
+
+    # Get all projects
+    projects_list = Proje.objects.all()
+
+    # Set up pagination for projects
+    paginator = Paginator(projects_list, 9)  # Display 9 projects per page, adjust number as needed
+    page_number = request.GET.get('page')
+    projects = paginator.get_page(page_number)
+
+    context = {
+        'services': services,
+        'slayts': slayts,
+        'projects': projects,  # This now contains the paginated projects
+        'hesaplar': hesaplar,
+        'hizmet_tanim': hizmet_tanim,
+        'slogan': slogan,
+        'proje_tanim': proje_tanim,
+        'slayt_tanim': slayt_tanim
+    }
+
+    return render(request, 'index.html', context=context)
+
 
 def about_page(request):
     bizkimiz=BizKimiz.objects.all().first()
@@ -54,15 +86,29 @@ def services_page(request):
     return render(request,'services.html',context=context)
 
 def projects_page(request):
-    services=Hizmet.objects.all()
-    proje_tanim=ProjeAçıklama.objects.all().first()
-    projects=Proje.objects.all()
-    hesaplar=Hesap.objects.all()
-    context={'services':services,
-             'projects':projects,
-             'hesaplar':hesaplar,
-             'proje_tanim':proje_tanim}
-    return render(request,'projects.html',context=context)
+    services = Hizmet.objects.all()
+    proje_tanim = ProjeAçıklama.objects.all().first()
+    hesaplar = Hesap.objects.all()
+
+    # Get all projects
+    projects_list = Proje.objects.all()
+
+    # Set up pagination
+    paginator = Paginator(projects_list, 9)  # Display 9 projects per page
+    page_number = request.GET.get('page')
+    projects = paginator.get_page(page_number)
+
+    # Prepare context
+    context = {
+        'services': services,
+        'projects': projects,
+        'hesaplar': hesaplar,
+        'proje_tanim': proje_tanim
+    }
+
+    return render(request, 'projects.html', context=context)
+
+
 def contact_page(request):
         if request.method == 'POST':
             print("posta girdin")
