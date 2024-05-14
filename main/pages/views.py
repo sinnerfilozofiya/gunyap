@@ -31,6 +31,7 @@ from django.core.paginator import Paginator
 #     return render(request,'index.html',context=context)
 
 def home_page(request):
+    # Common data fetching
     services = Hizmet.objects.all()
     slayts = Slayt.objects.order_by('order')
     hesaplar = Hesap.objects.all()
@@ -39,23 +40,31 @@ def home_page(request):
     proje_tanim = ProjeAçıklama.objects.all().first()
     slayt_tanim = SlaytAçıklama.objects.all().first()
 
-    # Get all projects
-    projects_list = Proje.objects.all()
+    # Retrieve the current filter from the request parameters or use '*' as a default
+    current_filter = request.GET.get('current_filter', '*')
 
-    # Set up pagination for projects
+    # Filter projects based on the current filter if it's not '*'
+    if current_filter != '*':
+        projects_list = Proje.objects.filter(kategori__baslik=current_filter)
+    else:
+        projects_list = Proje.objects.all()
+
+    # Paginator setup for projects
     paginator = Paginator(projects_list, 9)  # Display 9 projects per page, adjust number as needed
     page_number = request.GET.get('page')
     projects = paginator.get_page(page_number)
 
+    # Prepare the context with all necessary data
     context = {
         'services': services,
         'slayts': slayts,
-        'projects': projects,  # This now contains the paginated projects
+        'projects': projects,
         'hesaplar': hesaplar,
         'hizmet_tanim': hizmet_tanim,
         'slogan': slogan,
         'proje_tanim': proje_tanim,
-        'slayt_tanim': slayt_tanim
+        'slayt_tanim': slayt_tanim,
+        'current_filter': current_filter  # Include current filter in the context
     }
 
     return render(request, 'index.html', context=context)

@@ -86,10 +86,12 @@
         </div>
         <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order">
           <ul class="portfolio-flters" data-aos="fade-up" data-aos-delay="100">
-            <li data-filter="*" class="filter-active"><a href="?current_filter=*&page={{ projects.number }}">Tamamı</a></li>
+            <li data-filter="*" class="{% if current_filter == '*' %}filter-active{% endif %}">
+                <a href="?current_filter=*&page=1">Tamamı</a>
+            </li>
             {% for filter in services %}
-                <li data-filter=".{{ filter.baslik }}">
-                    <a href="?current_filter={{ filter.baslik }}&page={{ projects.number }}">{{ filter.ad }}</a>
+                <li data-filter=".{{ filter.baslik }}" class="{% if current_filter == filter.baslik %}filter-active{% endif %}">
+                    <a href="?current_filter={{ filter.baslik }}&page=1">{{ filter.ad }}</a>
                 </li>
             {% endfor %}
         </ul>
@@ -130,12 +132,12 @@
                     <ul class="pagination">
                         {% if projects.has_previous %}
                             <li class="page-item">
-                                <a class="page-link" href="?page=1&current_filter={{ filter.baslik }}" aria-label="First">
+                                <a class="page-link" href="?page=1&current_filter={{ current_filter }}" aria-label="First">
                                     <span aria-hidden="true">&laquo;&laquo;</span>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="?page={{ projects.previous_page_number }}&current_filter={{ filter.baslik }}" aria-label="Previous">
+                                <a class="page-link" href="?page={{ projects.previous_page_number }}&current_filter={{ current_filter }}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
@@ -143,28 +145,28 @@
                             <li class="page-item disabled"><span class="page-link">&laquo;&laquo;</span></li>
                             <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
                         {% endif %}
-        
+                        
                         {% for num in projects.paginator.page_range %}
                             {% if projects.number == num %}
                                 <li class="page-item active"><span class="page-link">{{ num }}</span></li>
                             {% else %}
-                                <li class="page-item"><a class="page-link" href="?page={{ num }}&current_filter={{ filter.baslik }}">{{ num }}</a></li>
+                                <li class="page-item"><a class="page-link" href="?page={{ num }}&current_filter={{ current_filter }}">{{ num }}</a></li>
                             {% endif %}
                         {% endfor %}
-        
+                        
                         {% if projects.has_next %}
                             <li class="page-item">
-                                <a class="page-link" href="?page={{ projects.next_page_number }}&current_filter={{ filter.baslik }}" aria-label="Next">
+                                <a class="page-link" href="?page={{ projects.next_page_number }}&current_filter={{ current_filter }}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="?page={{ projects.paginator.num_pages }}&current_filter={{ filter.baslik }}" aria-label="Last">
+                                <a class="page-link" href="?page={{ projects.paginator.num_pages }}&current_filter={{ current_filter }}" aria-label="Last">
                                     <span aria-hidden="true">&raquo;&raquo;</span>
                                 </a>
                             </li>
                         {% else %}
-                            <li class="page-item disabled"><span the "page-link">&raquo;</span></li>
+                            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
                             <li class="page-item disabled"><span the "page-link">&raquo;&raquo;</span></li>
                         {% endif %}
                     </ul>
@@ -202,13 +204,14 @@
         sessionStorage.setItem('scrollPosition', window.scrollY || window.pageYOffset);
     });
     </script>
-    <script>
-      window.addEventListener('load', function() {
-          if (sessionStorage.getItem('scrollPosition') !== null) {
-              window.scrollTo(0, parseInt(sessionStorage.getItem('scrollPosition')));
-          }
-      });
-      </script>
+  <script>
+    window.addEventListener('load', function() {
+        var projectsDiv = document.getElementById('projects');
+        if (projectsDiv) {
+            projectsDiv.scrollIntoView();
+        }
+    });
+    </script>
   <!-- Template Main JS File -->
   <script src="{% static 'js/main.js' %}"></script>
 
