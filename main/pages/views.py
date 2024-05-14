@@ -86,26 +86,35 @@ def services_page(request):
     return render(request,'services.html',context=context)
 
 def projects_page(request):
+    # Retrieve the filter from the request parameters or use '*' as a default to indicate no filter
+    current_filter = request.GET.get('current_filter', '*')
+    
+    # Fetch all necessary objects from the database
     services = Hizmet.objects.all()
-    proje_tanim = ProjeAçıklama.objects.all().first()
+    proje_tanim = ProjeAçıklama.objects.first()
     hesaplar = Hesap.objects.all()
 
-    # Get all projects
-    projects_list = Proje.objects.all()
+    # Fetch all projects or filter by the category title if a specific filter is applied
+    if current_filter != '*':
+        projects_list = Proje.objects.filter(kategori__baslik=current_filter)
+    else:
+        projects_list = Proje.objects.all()
 
-    # Set up pagination
-    paginator = Paginator(projects_list, 9)  # Display 9 projects per page
+    # Paginator setup: paginate the projects_list with 9 items per page
+    paginator = Paginator(projects_list, 9)
     page_number = request.GET.get('page')
     projects = paginator.get_page(page_number)
 
-    # Prepare context
+    # Prepare the context with all necessary data
     context = {
         'services': services,
         'projects': projects,
         'hesaplar': hesaplar,
-        'proje_tanim': proje_tanim
+        'proje_tanim': proje_tanim,
+        'current_filter': current_filter  # Pass the current filter to the template
     }
 
+    # Render the 'projects.html' template with the provided context
     return render(request, 'projects.html', context=context)
 
 
