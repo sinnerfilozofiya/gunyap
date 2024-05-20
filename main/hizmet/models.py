@@ -24,7 +24,7 @@ class Hizmet(models.Model):
         blank=True,
         null=True,
         default='Özet',
-        validators=[MaxLengthValidator(200)]
+        validators=[MaxLengthValidator(500)]
     )
     
     def __str__(self):

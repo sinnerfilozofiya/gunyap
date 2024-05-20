@@ -69,7 +69,7 @@
 
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
-    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static  'img/breadcrumbs-bg.jpg' %}');">
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static  'img/backk.jpg' %}');">
     </div><!-- End Breadcrumbs -->
 
     <!-- ======= About Section ======= -->
@@ -87,7 +87,7 @@
               <p>{{bizkimiz.tanim}}</p>
               <div class="watch-video d-flex align-items-center position-relative">
                  <i class="bi bi-book"></i>
-                <a href="{{  bizkimiz.e_katalog.url  }}">E-Katalog</a>
+                <a href="{{  bizkimiz.e_katalog.url  }}" target="_blank">E-Katalog</a>
               </div>
             </div>
             
@@ -99,46 +99,6 @@
     </section>
     <!-- End About Section -->
 
-    <!-- ======= Stats Counter Section ======= -->
-    <section id="stats-counter" class="stats-counter section-bg">
-      <div class="container">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-4 col-md-6">
-            <div class="stats-item d-flex align-items-center w-100 h-100">
-              <i class="bi bi-emoji-smile color-blue flex-shrink-0"></i>
-              <div>
-                <span data-purecounter-start="0" data-purecounter-end="{{sayac.musteri}}" data-purecounter-duration="1" class="purecounter"></span>
-                <p>Mutlu Müşteri</p>
-              </div>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-4 col-md-6">
-            <div class="stats-item d-flex align-items-center w-100 h-100">
-              <i class="bi bi-journal-richtext color-orange flex-shrink-0"></i>
-              <div>
-                <span data-purecounter-start="0" data-purecounter-end="{{sayac.proje}}" data-purecounter-duration="1" class="purecounter"></span>
-                <p>Projeler</p>
-              </div>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-4 col-md-6">
-            <div class="stats-item d-flex align-items-center w-100 h-100">
-              <i class="bi bi-people color-pink flex-shrink-0"></i>
-              <div>
-                <span data-purecounter-start="0" data-purecounter-end="{{sayac.calisan}}" data-purecounter-duration="1" class="purecounter"></span>
-                <p>Çalışan</p>
-              </div>
-            </div>
-          </div><!-- End Stats Item -->
-
-        </div>
-
-      </div>
-    </section><!-- End Stats Counter Section -->
 
     <!-- ======= Alt Services Section ======= -->
     <section id="alt-services" class="alt-services">
@@ -154,7 +114,7 @@
               <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="200">
                 <i class="bi bi-patch-check flex-shrink-0"></i>
                 <div>
-                  <h4><a href="" class="stretched-link">{{madde.ad}}</a></h4>
+                  <h4>{{madde.ad}}</h4>
                   <p>{{madde.aciklama}}</p>
                 </div>
               </div>
@@ -179,7 +139,7 @@
               <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="200">
                 <i class="bi bi-patch-check flex-shrink-0"></i>
                 <div>
-                  <h4><a href="" class="stretched-link">{{madde.ad}}</a></h4>
+                  <h4>{{madde.ad}}</h4>
                   <p>{{madde.aciklama}}</p>
                 </div>
               </div>

@@ -43,19 +43,10 @@ class Vizyonumuz(models.Model):
     def __str__(self):
          return f"Vizyonumuz"
 
-class Sayaç(models.Model):
-    name=models.CharField(max_length=20,null=False,default='Sayaç')
-    musteri=models.IntegerField(null=False,default=232)
-    proje=models.IntegerField(null=False,default=521)
-    calisan=models.IntegerField(null=False,default=15)
-
-    def __str__(self):
-         return f"Sayaç"
-
 
 class Belge(models.Model):
     ad=models.CharField(max_length=200, unique=True,null=False)
-    belge = models.FileField(upload_to=document_directory_path,default="documents/isguvenligi.pdf")
+    belge = models.FileField(null=True,upload_to=document_directory_path)
     kapak_resmi=models.ImageField(upload_to=cover_directory_path,default="kapak/taban.jpeg")
     def __str__(self):
          return self.ad
@@ -65,4 +56,3 @@ BizKimiz._meta.verbose_name_plural = "Biz Kimiz"
 Misyonumuz._meta.verbose_name_plural = "Misyonumuz"
 Vizyonumuz._meta.verbose_name_plural = "Vizyonumuz"
 Belge._meta.verbose_name_plural = "Belgeler"
-Sayaç._meta.verbose_name_plural = "Sayaç"

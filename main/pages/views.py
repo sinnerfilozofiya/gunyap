@@ -3,7 +3,7 @@ from django.shortcuts import render
 from hizmet.models import Hizmet,HizmetAçıklama
 from proje.models import Proje,ProjeAçıklama
 from slayt.models import Slayt,Slogan,SlaytAçıklama
-from kurumsal.models import BizKimiz,Misyonumuz,Vizyonumuz,Belge,Sayaç
+from kurumsal.models import BizKimiz,Misyonumuz,Vizyonumuz,Belge
 from hesap.models import Hesap
 from kariyer.models import KariyerAçıklama,KariyerGörsel
 from .form import ContactForm
@@ -74,7 +74,6 @@ def about_page(request):
     bizkimiz=BizKimiz.objects.all().first()
     misyonumuz=Misyonumuz.objects.all().first()
     vizyonumuz=Vizyonumuz.objects.all().first()
-    sayac=Sayaç.objects.all().first()
     belgeler=Belge.objects.all()
     hesaplar=Hesap.objects.all()
     context={'bizkimiz':bizkimiz,
@@ -82,7 +81,6 @@ def about_page(request):
              'vizyonumuz':vizyonumuz,
              'belgeler':belgeler,
              'hesaplar':hesaplar,
-             'sayac':sayac
             }
     return render(request,'about.html',context=context)
 def services_page(request):

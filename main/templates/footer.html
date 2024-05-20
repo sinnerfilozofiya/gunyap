@@ -4,13 +4,18 @@
         <div class="row">      
           <div class="col-lg-4 col-md-6">
             <div class="footer-info">
-              <div class="custom-font h3">Günyap Grup<span>.</span></div>
-              <p>
-                İstasyon Mahallesi, 1493/1 Sokak No:27/A<br>
-                Gebze/KOCAELİ<br><br>
-                <strong>İletişim:</strong> +90 262 655 10 1<br>
-                <strong>Email:</strong> info@gunyapgrup.com.tr<br>
-              </p>
+              <div class="custom-font h3">Günyap Elektrik İnşaat Taahhüt Mühendislik Müşavirlik San. Ve Tic. Ltd. Şti<span>.</span></div>
+                <p class="d-flex align-items-center justify-content-start">
+                  <i class="bi bi-whatsapp" style="font-size: larger;"></i>&nbsp; <strong>İletişim:</strong> 0262 655 1012<br> <!-- WhatsApp sembolü -->
+                </p>
+                <p class="d-flex align-items-center justify-content-start">
+                  <i class="bi bi-envelope" style="font-size: larger;"></i>&nbsp; <strong>Email:</strong>info@gunyapgrup.com.tr<br> <!-- Zarf sembolü -->
+                </p>
+                <p class="d-flex align-items-center justify-content-start">
+                  İstasyon Mahallesi, 1493/1 Sokak No:27/A<br>
+                  Gebze/KOCAELİ<br><br>
+                </p>
+              <div>
               <div class="social-links d-flex mt-3">
                 {% for hesap in hesaplar %}
                     {% if hesap.ad == 'Facebook' and hesap.baglanti %}
