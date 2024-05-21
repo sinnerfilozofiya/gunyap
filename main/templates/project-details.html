@@ -65,54 +65,46 @@
     <!-- ======= Breadcrumbs ======= -->
     <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static  'img/backk.jpg' %}');">
     </div><!-- End Breadcrumbs -->
+<!-- ======= Project Details Section ======= -->
+<section id="project-details" class="project-details">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-    <!-- ======= Projet Details Section ======= -->
-    <section id="project-details" class="project-details">
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="position-relative h-100">
-          <div class="slides-1 portfolio-details-slider swiper">
-            <div class="swiper-wrapper align-items-center">
-              <div class="swiper-slide">
-                <img src="{{ proje.kapak_resmi.url }}" alt="">
-              </div>
-              {% for resim in proje.resimler.all %}
-                <div class="swiper-slide">
-                  <img src="{{ resim.image.url }}" alt="">
-                </div>
-                {% endfor %}
-            </div>
-            <div class="swiper-pagination"></div>
-          </div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-
+    <div class="row justify-content-between gy-4 mt-4">
+      <div class="col-lg-8">
+        <div class="portfolio-description">
+          <h2>{{ proje.ad }}</h2>
+          <p>{{ proje.aciklama }}</p>
         </div>
-
-        <div class="row justify-content-between gy-4 mt-4">
-
-          <div class="col-lg-8">
-            <div class="portfolio-description">
-              <h2>{{proje.ad}}</h2>
-              <p>{{proje.aciklama}}</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3">
-            <div class="portfolio-info">
-              <h3>Proje Bilgileri</h3>
-              <ul>
-                <li><strong>Kategori</strong> <span>{{proje.kategori.ad}}</span></li>
-                <li><strong>Müşteri</strong> <span>{{proje.ad}}</span></li>
-                <li><strong>Proje Tarihi</strong> <span>{{ proje.eklenme_tarihi|date}}</span></li>
-              </ul>
-            </div>
-          </div>
-
-        </div>
-
       </div>
-    </section><!-- End Projet Details Section -->
+      <div class="col-lg-3">
+        <div class="portfolio-info">
+          <h3>Proje Bilgileri</h3>
+          <ul>
+            <li><strong>Kategori</strong> <span>{{ proje.kategori.ad }}</span></li>
+            <li><strong>Müşteri</strong> <span>{{ proje.ad }}</span></li>
+            <li><strong>Proje Tarihi</strong> <span>{{ proje.eklenme_tarihi|date }}</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="image-grid">
+      <div class="project-image-container">
+        <img src="{{ proje.kapak_resmi.url }}" alt="" class="project-image">
+      </div>
+      {% for resim in proje.resimler.all %}
+      <div class="project-image-container">
+        <img src="{{ resim.image.url }}" alt="" class="project-image">
+      </div>
+      {% endfor %}
+    </div>
+
+
+
+  </div>
+</section>
+<!-- End Project Details Section -->
 
   </main><!-- End #main -->
   {% include 'footer.html' %}

@@ -961,6 +961,73 @@ section {
   margin-bottom: 0;
 }
 
+
+.position-relative {
+
+  position: relative;
+
+}
+
+
+
+.position-absolute {
+
+  position: absolute;
+
+  z-index: 2; /* Ensure this is higher than the image's z-index */
+
+  top: 65%; /* Centers the text vertically */
+
+  left: 0; /* Starts the text from the left edge */
+
+  width: 100%; /* Makes the text span the full width of the image */
+
+  padding: 0 10px; /* Adds some padding on the left and right */
+
+  box-sizing: border-box; /* Includes padding in width calculation */
+
+}
+
+
+
+.translate-middle-y {
+
+  transform: translateY(-50%); /* Vertically centers the text */
+
+}
+
+
+
+.text-black { /* Renamed from .text-white for clarity */
+
+  color: black; /* Changes the text color to black */
+
+  font-size: 13px; /* Adjust font size as necessary */
+
+  text-align: left; /* Aligns the text to the left */
+
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8); /* Adds text shadow for better readability against lighter backgrounds */
+
+  max-width: 150px; /* Adjust this width based on your layout */
+  word-break: break-word; /* Ensures the text breaks to the next line */
+  white-space: normal; /* Allows text to wrap */
+}
+
+
+
+.filter-active a {
+
+  color: #ffffff;  
+
+  background-color: rgba(254, 185, 0, 0.8);
+
+  border-radius: 5px;  
+
+  padding: 5px 10px;  
+
+  text-decoration: none; 
+
+}
 /*--------------------------------------------------------------
 # Our Projects Section
 --------------------------------------------------------------*/
@@ -1402,6 +1469,7 @@ section {
   border-width: 1px; /* Set the border width */
   overflow: hidden;
   position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 1024px) {
@@ -1499,9 +1567,60 @@ section {
 /*--------------------------------------------------------------
 # Projet Details Section
 --------------------------------------------------------------*/
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
+
+.project-image-container {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .image-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-image-container {
+    width: 100%;
+    height: auto;
+  }
+
+  .project-image {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Ensuring swiper-slide images are within specified dimensions */
 .swiper-slide img {
-  max-width: 100%; /* Ensure images don't exceed the slide width */
-  height: auto; /* Maintain image aspect ratio */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
 }
 
 .project-details .portfolio-details-slider img {
@@ -1511,7 +1630,7 @@ section {
 .project-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet {
   width: 12px;
   height: 12px;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: grey
   opacity: 1;
 }
 

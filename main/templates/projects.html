@@ -77,6 +77,7 @@
       </div>
     </div><!-- End Breadcrumbs -->
 
+
     <!-- ======= Our Projects Section ======= -->
     <section id="projects" class="projects">
       <div class="container" data-aos="fade-up">
@@ -86,11 +87,11 @@
         </div>
         <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order">
           <ul class="portfolio-flters" data-aos="fade-up" data-aos-delay="100">
-            <li data-filter="*" class="{% if current_filter == '*' %}filter-active{% endif %}">
+            <li class="{% if current_filter == '*' %}filter-active{% endif %}">
                 <a href="?current_filter=*&page=1">Tamamı</a>
             </li>
             {% for filter in services %}
-                <li data-filter=".{{ filter.baslik }}" class="{% if current_filter == filter.baslik %}filter-active{% endif %}">
+                <li class="{% if current_filter == filter.baslik %}filter-active{% endif %}">
                     <a href="?current_filter={{ filter.baslik }}&page=1">{{ filter.ad }}</a>
                 </li>
             {% endfor %}
@@ -167,14 +168,18 @@
                             </li>
                         {% else %}
                             <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
-                            <li class="page-item disabled"><span the "page-link">&raquo;&raquo;</span></li>
+                            <li class="page-item disabled"><span class="page-link">&raquo;&raquo;</span></li>
                         {% endif %}
                     </ul>
                 </nav>
             </div>
             {% else %}
             <div class="col-12 text-center">
-                <p>No projects available for the selected filter.</p>
+              <br>
+              <br>
+              <br>
+              <br>
+                <p>Seçilen filtreye uygun proje bulunamadı.</p>
             </div>
             {% endif %}
         </div>
