@@ -75,6 +75,13 @@
           <h2>{{ proje.ad }}</h2>
           <p>{{ proje.aciklama }}</p>
         </div>
+        <div class="row">
+          {% for resim in proje.resimler.all %}
+          <div class="col-lg-3">
+              <img src="{{ resim.image.url }}" alt="" class="project-image">
+          </div>
+          {% endfor %}
+        </div>
       </div>
       <div class="col-lg-3">
         <div class="portfolio-info">
@@ -87,20 +94,6 @@
         </div>
       </div>
     </div>
-
-
-    <div class="image-grid">
-      <div class="project-image-container">
-        <img src="{{ proje.kapak_resmi.url }}" alt="" class="project-image">
-      </div>
-      {% for resim in proje.resimler.all %}
-      <div class="project-image-container">
-        <img src="{{ resim.image.url }}" alt="" class="project-image">
-      </div>
-      {% endfor %}
-    </div>
-
-
 
   </div>
 </section>

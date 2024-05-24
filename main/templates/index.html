@@ -74,9 +74,8 @@
       </div>
     </div>
 
-    <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+    <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
       {% for slayt in slayts %} 
-        <h1>{{slayt.image}}</h1>
         <div class="carousel-item {% if forloop.first %}active{% endif %}" style="background-image: url({{ slayt.image.url }})"></div>
       {% endfor %}
      
