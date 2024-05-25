@@ -86,7 +86,7 @@
               <h3>{{service.ad}}</h3>
               <!-- Text container -->
               <div class="text-container">
-                <p>{{service.ozet}}</p>
+                <p>{{service.ozet|linebreaks}}</p>
               </div>
               <!-- End of text container -->
               <a href="{% url 'service_detail' service.baslik %}" class="readmore stretched-link">Daha Fazlası <i class="bi bi-arrow-right"></i></a>

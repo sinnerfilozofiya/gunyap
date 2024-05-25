@@ -28,6 +28,9 @@ class FileFieldForm(forms.ModelForm):
         fields = (
             "ad",
             "aciklama",
+            "kategori",
+            "proje_tarihi",
+            "kapak_resmi"
         )
     photos = MultipleFileField()
     def clean_photos(self):

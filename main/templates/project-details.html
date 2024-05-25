@@ -73,7 +73,7 @@
       <div class="col-lg-8">
         <div class="portfolio-description">
           <h2>{{ proje.ad }}</h2>
-          <p>{{ proje.aciklama }}</p>
+          <p>{{ proje.aciklama|linebreaks }}</p>
         </div>
         <div class="row">
           {% for resim in proje.resimler.all %}
@@ -89,7 +89,7 @@
           <ul>
             <li><strong>Kategori</strong> <span>{{ proje.kategori.ad }}</span></li>
             <li><strong>Müşteri</strong> <span>{{ proje.ad }}</span></li>
-            <li><strong>Proje Tarihi</strong> <span>{{ proje.eklenme_tarihi|date }}</span></li>
+            <li><strong>Proje Tarihi</strong> <span>{{ proje.proje_tarihi|date }}</span></li>
           </ul>
         </div>
       </div>

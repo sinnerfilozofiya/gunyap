@@ -34,7 +34,7 @@ class ImageInline(admin.TabularInline):
 class ProjeAdmin(admin.ModelAdmin):
     form = FileFieldForm
     inlines = [ImageInline]
-    list_display=['ad','eklenme_tarihi']
+    list_display=['ad',]
     exclude = ('baslik',)
     add_fieldsets = (
     (None, {

@@ -26,7 +26,7 @@ class Proje(models.Model):
     baslik= models.CharField(max_length=300, unique=False,blank=True)
     ozet= models.CharField(max_length=1000, unique=False,null=True)
     kategori=models.ForeignKey(Hizmet,null=True,on_delete=models.DO_NOTHING)
-    eklenme_tarihi = models.DateTimeField(auto_now_add=True)
+    proje_tarihi = models.DateTimeField()
     kapak_resmi=models.ImageField(upload_to=proje_directory_path,default='projects/template.jpg',null=True,blank=True)
 
     def __str__(self):

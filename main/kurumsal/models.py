@@ -45,7 +45,7 @@ class Vizyonumuz(models.Model):
 
 
 class Belge(models.Model):
-    ad=models.CharField(max_length=200, unique=True,null=False)
+    ad=models.CharField(max_length=200, unique=False,null=False)
     belge = models.FileField(null=True,upload_to=document_directory_path)
     kapak_resmi=models.ImageField(upload_to=cover_directory_path,default="kapak/taban.jpeg")
     def __str__(self):
