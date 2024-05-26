@@ -6,35 +6,28 @@ from django.utils.html import format_html
 from django import forms
 from PIL import Image as PILImage
 from django.http import HttpResponseRedirect
-
+from django.urls import reverse
 
 class ImageInline(admin.TabularInline):
     model = ProjeResim
-    fields = ['image', 'img_preview', 'rotate_right_button',]
-    readonly_fields = ['img_preview','rotate_right_button',]
+    fields = ['image', 'img_preview', 'rotate_button',]
+    readonly_fields = ['img_preview','rotate_button',]
     extra = 0
 
     def img_preview(self, obj):
         return format_html('<img src="{}" width="200" height="200" id="img-preview-{}"/>', obj.image.url, obj.pk)
     img_preview.short_description = "Image Preview"
 
-    def rotate_image(self, obj, degrees):
-        print("obje şu",obj)
-        print("degreeee",degrees)
-        pil_image = PILImage.open(obj.image.path)
-        pil_image = pil_image.convert('RGB')
-        rotated_image = pil_image.rotate(degrees, expand=True)
-        rotated_image.save(obj.image.path)
-        print("save edildi")
 
-    def rotate_right_button(self, obj):
-        return format_html('<input type="button" value="Döndür" onclick="rotateImage({0}, 90)">', obj.pk)
-    rotate_right_button.short_description = "Döndür"
+    def rotate_button(self, obj):
+       return format_html('<a class="rotate-image-button" data-image-id="{}" data-project-id="{}" data-rotate-url="{}">Rotate</a>',
+                   obj.pk, obj.proje.id,reverse("rotate_image", args=[obj.pk, obj.proje.id]))
+    rotate_button.short_description = "Döndür"
 
 class ProjeAdmin(admin.ModelAdmin):
     form = FileFieldForm
     inlines = [ImageInline]
-    list_display=['ad',]
+    list_display=['ad','proje_tarihi']
     exclude = ('baslik',)
     add_fieldsets = (
     (None, {
@@ -46,7 +39,7 @@ class ProjeAdmin(admin.ModelAdmin):
         form.save_photos(form.instance)
 
     class Media:
-        js = ['js/image_rotation.js']
+        js = ('js/custom_admin.js',)
 class ProjeAçıklamaAdmin(admin.ModelAdmin):
     # verbose_name, verbose_name_plural ve verbose_name olarak kullanılabilir
     list_display=['tanim',]

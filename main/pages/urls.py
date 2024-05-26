@@ -9,4 +9,6 @@ urlpatterns = [
     path('contact/', views.contact_page,name='contact'),
     path('documents/',views.documents_page,name='documents'),
     path('career/',views.career_page,name='career'),
+
+     path('admin/proje/proje/<int:proje_id>/change/<int:image_id>', views.rotate_image, name='rotate_image'),
 ]

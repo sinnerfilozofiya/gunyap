@@ -93,7 +93,11 @@
           </div>
 
           <div class="col-lg-8">
-            <img src="{{service.image.url}}" alt="{{service.ad}}" class="img-fluid services-img">
+            <div class="row" >
+              <div class="col-lg-5">
+                  <img src="{{service.image.url}}" alt="{{service.ad}}" class="img-fluid services-img">
+              </div>  
+            </div>  
             <h3>{{service.ad}}</h3>
             <p>{{service.tanim|linebreaks}}</p>
           </div>

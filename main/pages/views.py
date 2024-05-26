@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from hizmet.models import Hizmet,HizmetAçıklama
-from proje.models import Proje,ProjeAçıklama
+from proje.models import Proje,ProjeAçıklama,ProjeResim
 from slayt.models import Slayt,Slogan,SlaytAçıklama
 from kurumsal.models import BizKimiz,Misyonumuz,Vizyonumuz,Belge
 from hesap.models import Hesap,Telefon,Mail,Adres
@@ -9,6 +9,11 @@ from kariyer.models import KariyerAçıklama,KariyerGörsel
 from .form import ContactForm
 from mesaj.models import Mesaj
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+from PIL import Image as PILImage
+from io import BytesIO
+import json
+from django.shortcuts import get_object_or_404
 
 # def home_page(request):
 #     services=Hizmet.objects.all()
@@ -218,3 +223,23 @@ def career_page(request):
              'adres':adres
             }
     return render(request,'career.html',context=context)
+
+def rotate_image(request, proje_id,image_id):
+    if request.method == 'POST':
+        try:
+            # Görsel nesnesini al
+            request_data = json.loads(request.body)
+            projectId = request_data['proje_id']
+            imageId = request_data['image_id']
+            gorsel = get_object_or_404(ProjeResim, pk=imageId)
+            print("path",gorsel.image.url)
+            pil_image = PILImage.open(gorsel.image.path)
+            pil_image = pil_image.convert('RGB')
+            rotated_image = pil_image.rotate(-90, expand=True)
+            # Döndürülen görüntüyü kaydet
+            rotated_image.save(gorsel.image.path)
+            return JsonResponse({'error': 'Proje resmi bulundu.'})
+        except ProjeResim.DoesNotExist:
+            return JsonResponse({'error': 'Proje resmi bulunamadı.'}, status=400)
+    else:
+       pass
