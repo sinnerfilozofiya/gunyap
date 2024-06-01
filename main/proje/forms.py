@@ -30,7 +30,9 @@ class FileFieldForm(forms.ModelForm):
             "aciklama",
             "kategori",
             "proje_tarihi",
-            "kapak_resmi"
+            "kapak_resmi",
+            "order",
+            
         )
     photos = MultipleFileField()
     def clean_photos(self):

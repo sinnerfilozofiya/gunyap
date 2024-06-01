@@ -63,7 +63,7 @@ def home_page(request):
         projects_list = Proje.objects.all()
 
     # Paginator setup for projects
-    paginator = Paginator(projects_list, 9)  # Display 9 projects per page, adjust number as needed
+    paginator = Paginator(projects_list, 16)  # Display 16 projects per page, adjust number as needed
     page_number = request.GET.get('page')
     projects = paginator.get_page(page_number)
     adres=Adres.objects.first()
@@ -138,9 +138,9 @@ def projects_page(request):
         projects_list = Proje.objects.filter(kategori__baslik=current_filter)
     else:
         projects_list = Proje.objects.all()
-    projects_list=projects_list.order_by('-proje_tarihi')
+    projects_list=projects_list.order_by('-order')
     # Paginator setup: paginate the projects_list with 9 items per page
-    paginator = Paginator(projects_list, 9)
+    paginator = Paginator(projects_list, 16)
     page_number = request.GET.get('page')
     projects = paginator.get_page(page_number)
     adres=Adres.objects.first()

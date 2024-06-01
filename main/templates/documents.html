@@ -28,15 +28,11 @@
 
   <!-- Template Main CSS File -->
   <link href="{% static  'css/main.css' %}" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: UpConstruction
-  * Template URL: https://bootstrapmade.com/upconstruction-bootstrap-construction-website-template/
-  * Updated: Mar 17 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <style>
+</style>
+  
 </head>
+
 
 <body>
 
@@ -72,7 +68,7 @@
     <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static  'img/backk.jpg' %}');">
     </div><!-- End Breadcrumbs -->
 
-    <!-- ======= About Section ======= -->
+
     
     <!-- ======= Our Team Section ======= -->
     <section id="team" class="team">
@@ -86,7 +82,7 @@
           {% for belge in belgeler %}
               <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
                   <div class="member-img position-relative">
-                      <a href="{{ belge.belge.url }}" title="İncele" class="details-link">
+                      <a href="#" title="İncele" class="details-link" data-bs-toggle="modal" data-bs-target="#documentModal" data-url="{{ belge.belge.url }}" data-title="{{ belge.ad }}">
                           <img src="{{ belge.kapak_resmi.url}}" class="img-fluid" alt="">
                           <div class="overlay-text position-absolute translate-middle-y text-black">
                               {{ belge.ad }}
@@ -94,7 +90,7 @@
                       </a>
                   </div>
                   <div class="member-info text-center">
-                      <h4><a href="{{ belge.belge.url }}">{{ belge.ad }}</a></h4>
+                      <h4><a href="#" data-bs-toggle="modal" data-bs-target="#documentModal" data-url="{{ belge.belge.url }}" data-title="{{ belge.ad }}">{{ belge.ad }}</a></h4>
                   </div>
               </div><!-- End Team Member -->
           {% endfor %}
@@ -109,6 +105,19 @@
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <div id="preloader"></div>
+  <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="documentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="documentModalLabel">Document Viewer</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img id="documentImage" src="" class="img-fluid" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Vendor JS Files -->
   <script src="{% static  'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -121,6 +130,25 @@
 
   <!-- Template Main JS File -->
   <script src="{% static  'js/main.js' %}"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var documentModal = document.getElementById('documentModal');
+      documentModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget;
+        var url = button.getAttribute('data-url');
+        var title = button.getAttribute('data-title');
+        var modalImage = document.getElementById('documentImage');
+        var modalTitle = document.getElementById('documentModalLabel');
+        modalImage.src = url;
+        modalTitle.textContent = title;
+      });
+
+      documentModal.addEventListener('hidden.bs.modal', function() {
+        var modalImage = document.getElementById('documentImage');
+        modalImage.src = '';
+      });
+    });
+  </script>
 
 </body>
 

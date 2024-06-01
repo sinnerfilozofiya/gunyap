@@ -7,6 +7,7 @@ from django import forms
 from PIL import Image as PILImage
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+import time
 
 class ImageInline(admin.TabularInline):
     model = ProjeResim
@@ -15,25 +16,35 @@ class ImageInline(admin.TabularInline):
     extra = 0
 
     def img_preview(self, obj):
-        return format_html('<img src="{}" width="200" height="200" id="img-preview-{}"/>', obj.image.url, obj.pk)
+            unique_param = f"?v={int(time.time())}"
+            image_url = f"{obj.image.url}{unique_param}"
+            return format_html('<img src="{}" width="200" height="200" id="img-preview-{}"/>', image_url, obj.pk)
     img_preview.short_description = "Image Preview"
 
 
     def rotate_button(self, obj):
-       return format_html('<a class="rotate-image-button" data-image-id="{}" data-project-id="{}" data-rotate-url="{}">Rotate</a>',
+       return format_html('<a class="rotate-image-button" data-image-id="{}" data-project-id="{}" data-rotate-url="{}" style="cursor: pointer;">Rotate</a>',
                    obj.pk, obj.proje.id,reverse("rotate_image", args=[obj.pk, obj.proje.id]))
     rotate_button.short_description = "Döndür"
 
 class ProjeAdmin(admin.ModelAdmin):
     form = FileFieldForm
     inlines = [ImageInline]
-    list_display=['ad','proje_tarihi']
+    list_display=['ad','order']
     exclude = ('baslik',)
+    
+    fieldsets = (
+        (None, {
+            'fields': ('ad', 'aciklama', 'kategori','proje_tarihi','kapak_resmi'),
+        }),
+    )
     add_fieldsets = (
     (None, {
-        'fields': ('ad', 'aciklama', 'ozet', 'kategori'),
+        'fields': ('ad', 'aciklama', 'ozet', 'kategori',),
     }),
     )
+
+
     def save_related(self, request, form, formsets, change):
         super().save_related(request, form, formsets, change)
         form.save_photos(form.instance)
@@ -52,7 +63,6 @@ class ProjeAçıklamaAdmin(admin.ModelAdmin):
     
 
 admin.site.register(Proje, ProjeAdmin)
-admin.site.register(ProjeAçıklama, ProjeAçıklamaAdmin)
-ProjeAçıklama._meta.verbose_name_plural = "Açıklama"
+
 Proje._meta.verbose_name_plural = "Projeler"
 ProjeResim._meta.verbose_name_plural = "Proje Resimleri"

@@ -21,13 +21,14 @@ class ProjeAçıklama(models.Model):
     
 class Proje(models.Model):
     id = models.AutoField(primary_key=True, unique=True)  # Auto-incrementing, unique id field
-    ad = models.CharField(max_length=200, unique=False,null=False,default="Proje Adı")
+    ad = models.CharField(max_length=300, unique=False,null=False,default="Proje Adı")
     aciklama = models.TextField(blank=True, null=True)
     baslik= models.CharField(max_length=300, unique=False,blank=True)
     ozet= models.CharField(max_length=1000, unique=False,null=True)
     kategori=models.ForeignKey(Hizmet,null=True,on_delete=models.DO_NOTHING)
     proje_tarihi = models.DateTimeField()
     kapak_resmi=models.ImageField(upload_to=proje_directory_path,default='projects/template.jpg',null=True,blank=True)
+    order = models.IntegerField(default=0)
 
     def __str__(self):
         return self.ad

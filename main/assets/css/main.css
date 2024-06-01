@@ -20,7 +20,7 @@
 /* Colors */
 :root {
   --color-default: #364d59;
-  --color-primary: #feb900;
+  --color-primary: #e67214;
   --color-secondary: #52565e;
 }
 
@@ -272,7 +272,7 @@ section {
 }
 
 .header .logo img {
-  max-height: 250px;
+  max-height: 100px;
   margin-right: 6px;
 }
 
@@ -321,7 +321,7 @@ section {
     justify-content: space-between;
     padding: 0 3px;
     font-family: var(--font-primary);
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
@@ -769,7 +769,7 @@ section {
   /* Make the image fit within the container */
   width: 100%;
   height: 100%;
-  object-fit: cover;
+ 
 }
 
 .text-container {
@@ -803,6 +803,7 @@ section {
   overflow: hidden;
   height: 72px; /* Adjust based on your specific line-height and font-size */
   line-height: 24px; /* Example line-height */
+  font-size: 18px;
 }
 
 .services .service-item {
@@ -1043,7 +1044,7 @@ section {
   cursor: pointer;
   display: inline-block;
   padding: 0;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
   margin: 0 10px;
   line-height: 1;
@@ -1091,7 +1092,7 @@ section {
 }
 
 .projects .portfolio-content .portfolio-info h4 {
-  font-size: 14px;
+  font-size: 20px;
   padding: 5px 10px;
   font-weight: 400;
   color: #fff;
@@ -1120,6 +1121,7 @@ section {
   color: #fff;
   transition: 0.3s;
   line-height: 1.2;
+  
 }
 
 .projects .portfolio-content .portfolio-info .preview-link:hover,
@@ -1625,6 +1627,7 @@ section {
   object-fit: cover;
 }
 
+
 .project-details .portfolio-details-slider img {
   width: 100%;
 }
@@ -2083,6 +2086,7 @@ section {
 .hero {
   overflow-x: hidden;
   padding: 0;
+  
 }
 
 .hero .carousel {
@@ -2910,4 +2914,10 @@ section {
 
 .footer .footer-legal .credits a {
   color: var(--color-primary);
+}
+
+.project-details .image-container {
+  width: 100%;
+height: 100%;
+object-fit: cover;
 }
