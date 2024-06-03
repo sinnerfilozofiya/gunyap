@@ -269,10 +269,11 @@ section {
   top: 0;
   left: 0;
   right: 0;
+  align-items: center; /* Vertically center the content */
 }
 
 .header .logo img {
-  max-height: 100px;
+  max-height: 150px;
   margin-right: 6px;
 }
 
