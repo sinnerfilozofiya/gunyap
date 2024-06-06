@@ -76,6 +76,13 @@
           <p>{{ proje.aciklama|safe }}</p>
         </div>
         <div class="row">
+          {% if proje.video %}
+            <div class="col-lg-4">
+              <div class="image-container">
+                <img src="{{ proje.video.url }}" alt="" class="project-image" style="padding-bottom: 15px;">
+              </div>
+            </div>
+          {% endif %}
           <div class="col-lg-4">
             <div class="image-container">
               <img src="{{ proje.kapak_resmi.url }}" alt="" class="project-image" style="padding-bottom: 15px;">

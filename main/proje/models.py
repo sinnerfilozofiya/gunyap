@@ -13,6 +13,9 @@ def proje_ust_path(instance,filename):
     ad=slugify(instance.proje)
     return f'projects/{ad}/{filename}'
 
+def proje_video_path(instance,filename):
+    ad=slugify(instance)
+    return f'projects/{ad}/video/{filename}'
 
 
 class ProjeAçıklama(models.Model):
@@ -30,6 +33,7 @@ class Proje(models.Model):
     proje_tarihi = models.DateTimeField(blank=True,null=True)
     kapak_resmi=models.ImageField(upload_to=proje_directory_path,default='projects/template.jpg',null=True,blank=True)
     order = models.IntegerField(default=0)
+    video = models.FileField(upload_to=proje_video_path, null=True, blank=True)
 
     def __str__(self):
         return self.ad

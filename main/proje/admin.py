@@ -35,12 +35,12 @@ class ProjeAdmin(admin.ModelAdmin):
     
     fieldsets = (
         (None, {
-            'fields': ('ad', 'aciklama', 'kategori','proje_tarihi','kapak_resmi'),
+            'fields': ('ad', 'aciklama', 'kategori','proje_tarihi','kapak_resmi','video'),
         }),
     )
     add_fieldsets = (
     (None, {
-        'fields': ('ad', 'aciklama', 'ozet', 'kategori',),
+        'fields': ('ad', 'aciklama', 'ozet', 'kategori','video'),
     }),
     )
 
