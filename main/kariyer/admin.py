@@ -4,7 +4,7 @@ from .models import KariyerAçıklama,KariyerGörsel
     
 class KariyerAçıklamaAdmin(admin.ModelAdmin):
     # verbose_name, verbose_name_plural ve verbose_name olarak kullanılabilir
-    list_display=['tanim',]
+    
     def has_delete_permission(self, request, obj=None):
         return False
 

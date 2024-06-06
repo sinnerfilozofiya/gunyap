@@ -71,7 +71,7 @@
       <div class="container" data-aos="fade-up">
         <div class="section-header">
           <h2>Faaliyet Alanlarımız</h2>
-          <p>{{hizmet_tanim.tanim}}</p>
+          <p>{{hizmet_tanim.tanim|safe}}</p>
         </div>
         <div class="row gy-4">
           {% for service in services %}
@@ -86,7 +86,7 @@
               <h3>{{service.ad}}</h3>
               <!-- Text container -->
               <div class="text-container">
-                <p>{{service.ozet|linebreaks}}</p>
+                <p>{{service.ozet|safe}}</p>
               </div>
               <!-- End of text container -->
               <a href="{% url 'service_detail' service.baslik %}" class="readmore stretched-link">Daha Fazlası <i class="bi bi-arrow-right"></i></a>

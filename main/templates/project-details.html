@@ -73,7 +73,7 @@
       <div class="col-lg-8">
         <div class="portfolio-description">
           <h2>{{ proje.ad }}</h2>
-          <p>{{ proje.aciklama|linebreaks }}</p>
+          <p>{{ proje.aciklama|safe }}</p>
         </div>
         <div class="row">
           <div class="col-lg-4">
@@ -95,9 +95,13 @@
         <div class="portfolio-info">
           <h3>Proje Bilgileri</h3>
           <ul>
-            <li><strong>Kategori</strong> <span>{{ proje.kategori.ad }}</span></li>
-            <li><strong>Müşteri</strong> <span>{{ proje.ad }}</span></li>
-            <li><strong>Proje Tarihi</strong> <span>{{ proje.proje_tarihi|date }}</span></li>
+            <li><strong>KATEGORİ</strong> <span>{{ proje.kategori.ad }}</span></li>
+            <li><strong>MÜŞTERİ</strong> <span>{{ proje.ad }}</span></li>
+            <li>
+              {% if proje.proje_tarihi %}
+                  <strong>PROJE TARİHİ</strong> <span>{{ proje.proje_tarihi|date }}</span>
+              {% endif %}
+            </li>
           </ul>
         </div>
       </div>

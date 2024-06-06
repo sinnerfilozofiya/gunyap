@@ -16,7 +16,7 @@ class AçıklamaAdmin(admin.ModelAdmin):
  
 class HizmetAdmin(admin.ModelAdmin):
     # verbose_name, verbose_name_plural ve verbose_name olarak kullanılabilir
-    list_display=['ad','baslik','tanim',]
+    list_display=['ad','baslik',]
     exclude = ('baslik',)
 
 

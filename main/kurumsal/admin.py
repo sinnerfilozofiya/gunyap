@@ -3,7 +3,7 @@ from .models import BizKimiz,Misyonumuz,Vizyonumuz,Madde,Belge
 from main.admin import admin_site
 
 class BizKimizAdmin(admin.ModelAdmin):
-    list_display=['tanim']
+    
     def has_delete_permission(self, request, obj=None):
         return False
 
@@ -11,14 +11,14 @@ class BizKimizAdmin(admin.ModelAdmin):
         return False
  
 class MisyonumuzAdmin(admin.ModelAdmin):
-    list_display=['tanim']
+   
     def has_delete_permission(self, request, obj=None):
         return False
 
     def has_add_permission(self, request):
         return False
 class VizyonumuzAdmin(admin.ModelAdmin):
-    list_display=['tanim']
+    
     def has_delete_permission(self, request, obj=None):
         return False
 

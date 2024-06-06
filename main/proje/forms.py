@@ -31,7 +31,7 @@ class FileFieldForm(forms.ModelForm):
             "kategori",
             "proje_tarihi",
             "kapak_resmi",
-            "order",
+            
             
         )
     photos = MultipleFileField()

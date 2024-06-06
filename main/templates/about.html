@@ -84,7 +84,7 @@
             <h2>HAKKIMIZDA</h2>
             <div class="our-story">
               <h3>Biz Kimiz?</h3>
-              <p>{{bizkimiz.tanim}}</p>
+              <p>{{bizkimiz.tanim|safe}}</p>
               <div class="watch-video d-flex align-items-center position-relative">
                  <i class="bi bi-book"></i>
                 <a href="{{  bizkimiz.e_katalog.url  }}" target="_blank">E-Katalog</a>
@@ -109,13 +109,13 @@
 
           <div class="col-lg-5 d-flex flex-column justify-content-center">
             <h3>Misyonumuz</h3>
-            <p>{{misyonumuz.tanim}}</p>
+            <p>{{misyonumuz.tanim|safe}}</p>
             {% for madde in misyonumuz.madde.all %}
               <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="200">
                 <i class="bi bi-patch-check flex-shrink-0"></i>
                 <div>
                   <h4>{{madde.ad}}</h4>
-                  <p>{{madde.aciklama|linebreaks}}</p>
+                  <p>{{madde.aciklama|safe}}</p>
                 </div>
               </div>
             {% endfor%}
@@ -134,13 +134,13 @@
         <div class="row justify-content-around gy-4">
           <div class="col-lg-5 d-flex flex-column justify-content-center">
             <h3>Vizyonumuz</h3>
-            <p><p>{{vizyonumuz.tanim}}</p></p>
+            <p><p>{{vizyonumuz.tanim|safe}}</p></p>
             {% for madde in vizyonumuz.madde.all %}
               <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="200">
                 <i class="bi bi-patch-check flex-shrink-0"></i>
                 <div>
                   <h4>{{madde.ad}}</h4>
-                  <p>{{madde.aciklama|linebreaks}}</p>
+                  <p>{{madde.aciklama|safe}}</p>
                 </div>
               </div>
             {% endfor%}

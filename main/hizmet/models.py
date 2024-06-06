@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.core.validators import MaxLengthValidator
-
+from ckeditor.fields import RichTextField
 
 
 def service_directory_path(instance,filename):
@@ -17,10 +17,10 @@ class HizmetAçıklama(models.Model):
 
 class Hizmet(models.Model):
     ad = models.CharField(max_length=200, unique=True,null=False)
-    tanim = models.TextField(blank=True, null=True)
+    tanim=RichTextField(blank=True, null=True)
     baslik= models.CharField(max_length=300, unique=False,blank=True)
     image = models.ImageField(upload_to=service_directory_path,default="hizmetler/services.jpg")
-    ozet= models.TextField(
+    ozet= RichTextField(
         blank=True,
         null=True,
         default='Özet',

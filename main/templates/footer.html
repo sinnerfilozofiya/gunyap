@@ -21,11 +21,11 @@
                     {% if hesap.ad == 'Facebook' and hesap.baglanti %}
                         <a href="{{ hesap.baglanti }}" class="d-flex align-items-center justify-content-center"><i class="bi bi-facebook"></i></a>
                     {% elif hesap.ad == 'Facebook' and not hesap.baglanti %}
-                        <a href="#" class="d-flex align-items-center justify-content-center"><i class="bi bi-facebook"></i></a>
+                        <a href="{% url 'home' %}" class="d-flex align-items-center justify-content-center"><i class="bi bi-facebook"></i></a>
                     {% elif hesap.ad == 'Instagram' and hesap.baglanti %}
                         <a href="{{ hesap.baglanti }}" class="d-flex align-items-center justify-content-center"><i class="bi bi-instagram"></i></a>
                     {% elif hesap.ad == 'Instagram' and not hesap.baglanti %}
-                        <a href="#" class="d-flex align-items-center justify-content-center"><i class="bi bi-instagram"></i></a>
+                        <a href="{% url 'home' %}" class="d-flex align-items-center justify-content-center"><i class="bi bi-instagram"></i></a>
                     {% endif %}
                 {% endfor %}
               </div>
@@ -43,9 +43,7 @@
         <div class="copyright">
           Copyright &copy;<strong><span> Günyap Grup</span></strong>.Tüm Hakları Saklıdır
         </div>
-        <div class="credits">
-          Designed by <a href="https://www.linkedin.com/in/melisa-ayd%C4%B1nc%C4%B1-b522a11b2/">Melisa Aydıncı</a>
-        </div>
+        
       </div>
     </div>
 

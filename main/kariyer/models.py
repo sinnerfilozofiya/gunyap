@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 
 
@@ -8,7 +9,7 @@ def mesaj_directory_path(instance,filename):
 
 # Create your models here.
 class KariyerAçıklama(models.Model):
-    tanim = models.TextField(blank=True, null=True)
+    tanim = RichTextField(blank=True, null=True)
     def __str__(self):
         return f"Açıklama"
     

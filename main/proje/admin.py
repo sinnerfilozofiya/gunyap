@@ -23,14 +23,14 @@ class ImageInline(admin.TabularInline):
 
 
     def rotate_button(self, obj):
-       return format_html('<a class="rotate-image-button" data-image-id="{}" data-project-id="{}" data-rotate-url="{}" style="cursor: pointer;">Rotate</a>',
+       return format_html('<a class="rotate-image-button" data-image-id="{}" data-project-id="{}" data-rotate-url="{}" style="cursor: pointer;">Döndür</a>',
                    obj.pk, obj.proje.id,reverse("rotate_image", args=[obj.pk, obj.proje.id]))
     rotate_button.short_description = "Döndür"
 
 class ProjeAdmin(admin.ModelAdmin):
     form = FileFieldForm
     inlines = [ImageInline]
-    list_display=['ad','order']
+    list_display=['ad','order',]
     exclude = ('baslik',)
     
     fieldsets = (
@@ -52,7 +52,6 @@ class ProjeAdmin(admin.ModelAdmin):
     class Media:
         js = ('js/custom_admin.js',)
 class ProjeAçıklamaAdmin(admin.ModelAdmin):
-    # verbose_name, verbose_name_plural ve verbose_name olarak kullanılabilir
     list_display=['tanim',]
     def has_delete_permission(self, request, obj=None):
         return False
