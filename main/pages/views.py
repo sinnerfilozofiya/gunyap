@@ -14,6 +14,9 @@ from PIL import Image as PILImage
 from io import BytesIO
 import json
 from django.shortcuts import get_object_or_404
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 # def home_page(request):
 #     services=Hizmet.objects.all()
@@ -160,36 +163,74 @@ def projects_page(request):
     return render(request, 'projects.html', context=context)
 
 
+
+
+
+
+
+
+
 def contact_page(request):
-        if request.method == 'POST':
-            print("posta girdin")
-            form = ContactForm(request.POST)
-            if form.is_valid():
-                print("forma girdin")
-                # Form verilerini işleyin
-                name = form.cleaned_data['name']
-                email = form.cleaned_data['email']
-                phone = form.cleaned_data['phone']
-                subject = form.cleaned_data['subject']
-                message = form.cleaned_data['message']
-                mesaj = Mesaj.objects.create(
-                        gönderen=name,
-                        mail=email,
-                        telefon=phone,
-                        konu=subject,
-                        mesaj=message,
-                    )
-                mesaj.save()
-        hesaplar=Hesap.objects.all()
-        telefon = Telefon.objects.first()
-        mail=Mail.objects.first()
-        adres=Adres.objects.first()
-        context={'hesaplar':hesaplar,
-                 'telefon':telefon,
-                 'mail':mail,
-                 'adres':adres
-             }
-        return render(request,'contact.html',context=context)
+    if request.method == 'POST':
+        print("posta girdin")
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            print("forma girdin")
+            # Process form data
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            phone = form.cleaned_data['phone']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            mesaj = Mesaj.objects.create(
+                gönderen=name,
+                mail=email,
+                telefon=phone,
+                konu=subject,
+                mesaj=message,
+            )
+            mesaj.save()
+
+            # Prepare email content
+            email_subject = f'New Contact Message from {name}'
+            email_message = (
+                f'You have received a new message through your contact form.\n\n'
+                f'Name: {name}\n'
+                f'Email: {email}\n'
+                f'Phone: {phone}\n'
+                f'Subject: {subject}\n'
+                f'Message:\n{message}'
+            )
+
+            # Send email
+            # send_mail(
+            #     subject=email_subject,
+            #     message=email_message,
+            #     from_email=settings.DEFAULT_FROM_EMAIL,
+            #     recipient_list=settings.EMAIL_RECIPIENT_LIST,
+            #     fail_silently=False,
+            # )
+
+    hesaplar = Hesap.objects.all()
+    telefon = Telefon.objects.first()
+    mail = Mail.objects.first()
+    adres = Adres.objects.first()
+    context = {
+        'hesaplar': hesaplar,
+        'telefon': telefon,
+        'mail': mail,
+        'adres': adres
+    }
+    return render(request, 'contact.html', context=context)
+
+
+
+
+
+
+
+
+
 
 def documents_page(request):
     belgeler=Belge.objects.all()

@@ -29,6 +29,15 @@ DEBUG = True
 ALLOWED_HOSTS = []
 CSRF_TRUSTED_ORIGINS = ['https://test.gunyapgrup.com.tr','http://68.183.242.232']
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.domain.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your-email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your-email-password'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_RECIPIENT_LIST = ['your-email@gmail.com']
+
 # Application definition
 
 INSTALLED_APPS = [
