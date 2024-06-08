@@ -109,11 +109,27 @@
                 
                 <div class="portfolio-info">
                   <h4>{{ proje.kategori.ad }}</h4>
+                  
+                  <!-- Render the zoom-in icon for the first image -->
+                  {% if proje.resimler.all %}
+                      {% with proje.resimler.all|first as first_image %}
+                          <a href="{{ first_image.image.url }}" title="{{ proje.ad }}" data-gallery="portfolio-gallery-{{ proje.baslik }}" class="glightbox preview-link">
+                              <i class="bi bi-zoom-in"></i>
+                          </a>
+                      {% endwith %}
+                  {% endif %}
+                  
+                  <!-- Render the zoom-in icons for the remaining images but hide them -->
                   {% for resim in proje.resimler.all %}
-                  <a href="{{ resim.image.url }}" title="{{ proje.ad }}" data-gallery="portfolio-gallery-{{ proje.baslik }}" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                      {% if not forloop.first %}
+                          <a href="{{ resim.image.url }}" title="{{ proje.ad }}" data-gallery="portfolio-gallery-{{ proje.baslik }}" class="glightbox preview-link d-none"></a>
+                      {% endif %}
                   {% endfor %}
+                  
                   <a href="{% url 'project_details' proje.id %}" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
+              </div>
+
+                
                 <div>
                   
                 </div>
