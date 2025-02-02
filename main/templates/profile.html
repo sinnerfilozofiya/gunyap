@@ -11,18 +11,13 @@
             display: flex;
             font-family: 'Arial', sans-serif;
         }
-       
         .content {
             flex-grow: 1;
             padding: 20px;
         }
-        .table-container {
-            overflow-x: auto;
-        }
-       
         .sidebar {
             width: 250px;
-            background-color: #343a40; /* Koyu arka plan rengi */
+            background-color: #343a40;
             padding-top: 20px;
             padding-left: 20px;
             height: 100vh;
@@ -31,167 +26,177 @@
             justify-content: flex-start;
             align-items: flex-start;
         }
-
-        /* Sidebar Başlık */
         .sidebar h4 {
-            color: white; /* Menü başlığını beyaz yap */
+            color: white;
             margin-bottom: 20px;
         }
-
-        /* Sidebar Menü Linkleri */
         .nav-link {
-            color: white; /* Beyaz yazı rengi */
+            color: white;
             font-size: 16px;
-            padding: 12px 20px; /* Butonların iç padding'ini artırdık */
+            padding: 12px 20px;
             margin-bottom: 10px;
-            border-radius: 5px; /* Yuvarlatılmış köşeler */
+            border-radius: 5px;
             display: flex;
             align-items: center;
-            text-decoration: none; /* Alt çizgiyi kaldır */
-            transition: background-color 0.3s, color 0.3s; /* Hover geçiş efekti */
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
         }
-
-        /* İkon ve yazı arasındaki mesafeyi artır */
         .nav-link i {
-            margin-right: 10px; /* İkon ve yazı arasındaki boşluğu artır */
+            margin-right: 10px;
         }
-
-        /* Aktif Menü Linki */
         .nav-link.active {
-            background-color: #0d6efd; /* Aktif linkin arka plan rengi */
-            color: white; /* Aktif durumda yazı rengi */
+            background-color: #0d6efd;
+            color: white;
         }
-
-        /* Menü Linklerine Hover Efekti */
         .nav-link:hover {
-            background-color: #495057; /* Hover durumunda arka plan rengi */
-            color: #f8f9fa; /* Hover durumunda yazı rengi */
+            background-color: #495057;
+            color: #f8f9fa;
         }
-
-        /* Sidebar'daki butonlar daha şık olsun */
-        .nav-item {
-            border: 1px solid transparent; /* Kenarlıkları şeffaf yap */
-            border-radius: 5px; /* Yuvarlatılmış kenarlar */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
         }
-
-        /* Butonların arkaplanına ve kenarlıklarına efekt ekleyelim */
-        .nav-link:focus, .nav-link:hover {
-            outline: none; /* Odaklanma durumundaki kenarlıkları kaldır */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hover durumunda gölge efekti */
+        .profile-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 15px;
         }
-
-        /* Eğer Çıkış butonu varsa, ona özel stiller */
-        .logout-btn {
-            background-color: #dc3545; /* Çıkış butonu kırmızı */
-            border-radius: 25px; /* Yuvarlak buton */
-            color: white; /* Beyaz yazı */
-            padding: 10px 20px; /* Butonun iç padding'ini artır */
-            border: none; /* Kenarlık kaldır */
-            font-size: 16px;
-            transition: background-color 0.3s ease; /* Hover efekti */
+        .form-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 1100px;
+            margin: auto;
         }
-
-        .logout-btn:hover {
-            background-color: #c82333; /* Hover'da biraz daha koyu kırmızı */
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
         }
-
+        .form-left, .form-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .btn-full {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
+    <div class="sidebar">
+        <h4>Menü</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'customer' %}" onclick="setActive(this)">
+                    <i class="fas fa-home"></i> Anasayfa
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'profile' %}" onclick="setActive(this)">
+                    <i class="fas fa-user"></i> Profil
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit(); setActive(this)">
+                    <i class="fas fa-sign-out-alt"></i> Çıkış
+                </a>
+            </li>
+        </ul>
+    </div>
 
-<!-- Sidebar -->
-<div class="sidebar">
-    <h4>Menü</h4>
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'customer' %}" onclick="setActive(this)">
-                <i class="fas fa-home"></i>Anasayfa
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="{% url 'profile' %}" onclick="setActive(this)">
-                <i class="fas fa-user"></i>Profil
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit(); setActive(this)">
-                <i class="fas fa-sign-out-alt"></i>Çıkış
-            </a>
-        </li>
-    </ul>
-</div>
+    <div class="content">
+        <h2>Profilinizi Güncelleyin</h2>
+        <div class="form-container">
+            <div class="profile-header">
+                <img src="{{ user.profile.profile_picture.url }}" alt="Profil Fotoğrafı">
+                <div>
+                    <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                    <p>{{ user.email }}</p>
+                </div>
+            </div>
 
-<!-- Content -->
-<div class="content">
-    <h2>Profilinizi Güncelleyin</h2>
+            <div class="form-row">
+                <div class="form-left">
+                    <!-- Profile Picture Update -->
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="profile_picture" class="form-label">Profil Fotoğrafı</label>
+                        <input type="file" class="form-control mb-3" id="profile_picture" name="profile_picture">
+                        <button type="submit" class="btn btn-primary btn-full">Fotoğrafı Güncelle</button>
+                    </form>
 
-    <!-- Çıkış yap butonu -->
-    <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
-        {% csrf_token %}
-    </form>
+                    <!-- Email Update -->
+                    <form method="POST">
+                        {% csrf_token %}
+                        <label for="email" class="form-label">Yeni E-posta</label>
+                        <input type="email" class="form-control mb-3" id="email" name="email" placeholder="Yeni e-posta adresinizi girin">
+                        <button type="submit" class="btn btn-primary btn-full">E-postayı Güncelle</button>
+                    </form>
+                </div>
 
-    <!-- Profil Fotoğrafı Güncelleme -->
-    <div class="profile-header">
-        <img src="{{ user.profile.profile_picture.url }}" alt="Profil Fotoğrafı">
-        <div>
-            <h4>{{ user.first_name }} {{ user.last_name }}</h4>
-            <p>{{ user.email }}</p>
+                <!-- RIGHT SIDE (Change Password) -->
+                <div class="form-right">
+                    <form method="POST" onsubmit="return validatePassword()">
+                        {% csrf_token %}
+                        <label for="current_password" class="form-label">Mevcut Şifre</label>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" id="current_password" name="current_password" placeholder="Mevcut şifrenizi girin">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('current_password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+
+                        <label for="new_password" class="form-label">Yeni Şifre</label>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Yeni şifrenizi girin" onkeyup="checkPasswordMatch()">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('new_password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+
+                        <label for="confirm_password" class="form-label">Yeni Şifreyi Onaylayın</label>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Yeni şifrenizi tekrar girin" onkeyup="checkPasswordMatch()">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirm_password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+
+                        <small id="passwordError" class="text-danger"></small>
+                        <button type="submit" class="btn btn-primary btn-full">Şifreyi Güncelle</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-container">
-            <div class="form-group profile-img-upload">
-                <label for="profile_picture">Yeni Profil Fotoğrafı</label>
-                <input type="file" class="form-control" id="profile_picture" name="profile_picture">
-            </div>
-            <button type="submit" class="profile-btn">Fotoğrafı Güncelle</button>
-        </div>
-    </form>
+    <script>
+        function togglePassword(id) {
+            const passwordField = document.getElementById(id);
+            const icon = passwordField.nextElementSibling.querySelector('i');
 
-    <hr>
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
+            icon.classList.toggle("fa-eye-slash");
+            icon.classList.toggle("fa-eye");
+        }
 
-    <!-- Kullanıcı Bilgilerini Güncelleme -->
-    <h3>Profil Bilgilerinizi Düzenleyin</h3>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="profile-btn mt-3">Bilgileri Güncelle</button>
-    </form>
+        function checkPasswordMatch() {
+            const password = document.getElementById("new_password").value;
+            const confirmPassword = document.getElementById("confirm_password").value;
+            const passwordError = document.getElementById("passwordError");
 
-    <hr>
+            passwordError.innerText = password !== confirmPassword ? "Yeni şifreler eşleşmiyor!" : "";
+        }
 
-    <!-- Şifre Değiştirme -->
-    <h3>Şifrenizi Değiştirin</h3>
-    <form method="POST">
-        {% csrf_token %}
-        {{ password_form.as_p }}
-        <button type="submit" name="change_password" class="profile-btn mt-3">Şifreyi Değiştir</button>
-    </form>
-
-    <hr>
-
-    <!-- Çıkış Butonu -->
-    <form method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit" class="logout-btn mt-3">Çıkış Yap</button>
-    </form>
-
-</div>
-
-<script>
-function setActive(link) {
-    // Tüm linklerden 'active' sınıfını kaldır
-    const links = document.querySelectorAll('.nav-link');
-    links.forEach((item) => {
-        item.classList.remove('active');
-    });
-
-    // Tıklanan linke 'active' sınıfını ekle
-    link.classList.add('active');
-}
-</script>
-
+        function validatePassword() {
+            if (document.getElementById("passwordError").innerText) return false;
+            return true;
+        }
+    </script>
 </body>
 </html>
