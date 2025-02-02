@@ -131,24 +131,24 @@
     <h2>Dosya Listesi</h2>
 
     <!-- Filtreleme Formu -->
-    <form method="get" class="mb-3">
+    <form id="filter-form" class="mb-3">
         <div class="row">
             <div class="col-md-3">
-                <input type="text" name="dosya_adi" class="form-control" placeholder="Dosya Adı" value="{{ request.GET.dosya_adi }}">
+                <input type="text" name="dosya_adi" id="filename" class="form-control" placeholder="Dosya Adı">
             </div>
             <div class="col-md-3">
                 <!-- Tarih Aralığı Seçimi (daterangepicker) -->
-                <input type="text" name="daterange" id="daterange" class="form-control" />
+                <input type="text" name="daterange" id="daterange" class="form-control" placeholder="Tarih Aralığı"/>
             </div>
             <div class="col-md-3">
-                <button type="submit" class="btn btn-primary">Filtrele</button>
+                <button type="button" class="btn btn-primary" onclick="applyFilters()">Filtrele</button>
             </div>
         </div>
     </form>
 
     <!-- Table -->
     <div class="table-container">
-        <table class="table table-striped">
+        <table class="table table-striped" id="file-table">
             <thead>
                 <tr>
                     <th>Dosya Adı</th>
@@ -183,10 +183,44 @@
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.js"></script>
 
 <script>
+// Tabloyu güncellemek için bir fonksiyon
+function updateTable(dosyalar) {
+    let tableBody = document.querySelector('#file-table tbody');
+    tableBody.innerHTML = '';  // Tabloyu temizle
+
+    dosyalar.forEach(function(dosya) {
+        let row = document.createElement('tr');
+
+        let dosyaAdiCell = document.createElement('td');
+        dosyaAdiCell.innerHTML = `<a href="${dosya.dosya_url}" target="_blank">${dosya.ad}</a>`;
+        row.appendChild(dosyaAdiCell);
+
+        let dosyaTuruCell = document.createElement('td');
+        dosyaTuruCell.textContent = dosya.dosya_turu_ad;
+        row.appendChild(dosyaTuruCell);
+
+        let yuklenmeTarihiCell = document.createElement('td');
+        yuklenmeTarihiCell.textContent = dosya.yuklenme_tarihi;
+        row.appendChild(yuklenmeTarihiCell);
+
+        let dosyaTuruSiraCell = document.createElement('td');
+        dosyaTuruSiraCell.textContent = dosya.dosya_turu_sira;
+        row.appendChild(dosyaTuruSiraCell);
+
+        let dosyaTuruAdetCell = document.createElement('td');
+        dosyaTuruAdetCell.textContent = dosya.dosya_turu_adet;
+        row.appendChild(dosyaTuruAdetCell);
+
+        tableBody.appendChild(row);
+    });
+}
+
+
      moment.locale('tr'); // Türkçe dilini ayarla
 $(function() {
   $('input[name="daterange"]').daterangepicker({
     opens: 'right', // Takvimin sağda mı solda mı açılacağı
+    autoUpdateInput: false, 
     locale: {
         format: 'DD.MM.YYYY', // "1 Şubat 2025" formatı
         daysOfWeek: ['P', 'P', 'S', 'Ç', 'P', 'C', 'C'],
@@ -196,13 +230,33 @@ $(function() {
 
     }
   }, function(start, end, label) {
-    var formattedStart = start.locale('tr').format('DD MMMM YYYY'); // Başlangıç tarihini Türkçe formatta
-    var formattedEnd = end.locale('tr').format('DD MMMM YYYY'); // Bitiş tarihini Türkçe formatta
+    var formattedStart = start.locale('tr').format('DD.MM.YYYY'); // Başlangıç tarihini Türkçe formatta
+    var formattedEnd = end.locale('tr').format('DD.MM.YYYY'); // Bitiş tarihini Türkçe formatta
     
     // Tarih aralığını form input'una yerleştiriyoruz
-    $('input[name="daterange"]').val(formattedStart + ' / ' + formattedEnd);
+    $('input[name="daterange"]').val(formattedStart + ' - ' + formattedEnd);
   });
 });
+function applyFilters() {
+    let filterDosyaAdi = document.getElementById("filename").value;
+    let filterDateRange = document.getElementById("daterange").value;
+
+    $.ajax({
+        url: "{% url 'filter_file' %}",  // Sunucu tarafında filter_files url'sine yönlendirecek
+        method: "GET",
+        data: {
+            dosya_adi: filterDosyaAdi,
+            daterange: filterDateRange
+        },
+        success: function(response) {
+           updateTable(response.dosyalar_data);
+
+        },
+        error: function(error) {
+            console.error("Hata oluştu:", error);
+        }
+    });
+    }
 function setActive(link) {
     // Tüm linklerden 'active' sınıfını kaldır
     const links = document.querySelectorAll('.nav-link');
@@ -213,6 +267,7 @@ function setActive(link) {
     // Tıklanan linke 'active' sınıfını ekle
     link.classList.add('active');
 }
+
 </script>
 
 </body>
