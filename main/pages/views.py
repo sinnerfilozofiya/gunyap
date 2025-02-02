@@ -367,7 +367,7 @@ def filter_file(request):
 
     # Eğer dosya adı varsa, dosya adını filtrele
     if dosya_adi:
-        dosyalar = dosyalar.filter(ad__icontains=dosya_adi)
+        dosyalar = dosyalar.filter(dosya_turu__ad__icontains=dosya_adi)
 
     # Eğer tarih aralığı varsa, tarih aralığını filtrele
     if start_date and end_date:
