@@ -189,6 +189,16 @@ function updateTable(dosyalar) {
     let tableBody = document.querySelector('#file-table tbody');
     tableBody.innerHTML = '';  // Tabloyu temizle
 
+      // Eğer dosyalar boşsa
+    if (dosyalar.length === 0) {
+        let row = document.createElement('tr');
+        let emptyCell = document.createElement('td');
+        emptyCell.setAttribute('colspan', 5);  // 5 sütun olduğuna göre, colspan="5" yapıyoruz
+        emptyCell.textContent = 'Veri bulunamadı.';
+        row.appendChild(emptyCell);
+        tableBody.appendChild(row);
+        return;  // Başka işlem yapmaya gerek yok, fonksiyonu sonlandır
+    }
     dosyalar.forEach(function(dosya,index) {
         let row = document.createElement('tr');
 
