@@ -23,6 +23,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils.dateparse import parse_date
 from datetime import datetime
+from django.utils import timezone
 
 
 # def home_page(request):
@@ -377,13 +378,17 @@ def filter_file(request):
     # dosya_turleri_adet = Dosya.objects.filter(musteri=user).values('dosya_turu').annotate(adet=models.Count('dosya_turu'))
     dosyalar_data = []
     for dosya in dosyalar:
+        if dosya.yuklenme_tarihi:
+            dosya_tarihi_local = dosya.yuklenme_tarihi.astimezone(timezone.get_current_timezone())
+        else:
+            dosya_tarihi_local = dosya.yuklenme_tarihi
         dosyalar_data.append({
             'ad': dosya.ad,
             'dosya_url': dosya.dosya.url,
             'dosya_turu_sira': dosya.dosya_turu_sira,
             'dosya_turu_adet': dosya.dosya_turu.adet,
             'dosya_turu_ad': dosya.dosya_turu.ad,
-            'yuklenme_tarihi': dosya.yuklenme_tarihi.strftime('%d.%m.%Y'),
+            'yuklenme_tarihi': dosya_tarihi_local.strftime('%d.%m.%Y'),
         })
     return JsonResponse({'dosyalar_data': dosyalar_data})
 @login_required
