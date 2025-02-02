@@ -371,6 +371,7 @@ def filter_file(request):
 
     # Eğer tarih aralığı varsa, tarih aralığını filtrele
     if start_date and end_date:
+        end_date = datetime.combine(end_date, datetime.max.time())  # Bu, saat 23:59:59'a ayarlayacaktır
         dosyalar = dosyalar.filter(yuklenme_tarihi__range=[start_date, end_date])
 
     # dosya_turleri_adet = Dosya.objects.filter(musteri=user).values('dosya_turu').annotate(adet=models.Count('dosya_turu'))

@@ -12,7 +12,7 @@ class DosyaAdmin(admin.ModelAdmin):
     list_display = ('ad', 'dosya_turu', 'musteri', 'yuklenme_tarihi', 'dosya_turu_sira')  # Görüntülenecek alanlar
     search_fields = ('ad', 'dosya_turu__ad', 'musteri__username')  # Dosya adı, dosya türü ve müşteri adı ile arama yapılabilir
     list_filter = ('dosya_turu', 'musteri')  # Dosya türüne ve müşteri adına göre filtreleme yapılabilir
-    raw_id_fields = ('dosya_turu', 'musteri')  # Daha hızlı veri seçimi için
+    autocomplete_fields = ('dosya_turu', 'musteri')  # Dosya türü ve müşteri isimlerinin gösterilmesi
     exclude = ('dosya_turu_sira',) 
     # Dosya düzenleme formunda, dosya türü ve müşteri seçimlerini daha iyi yönetmek için
     def get_readonly_fields(self, request, obj=None):
