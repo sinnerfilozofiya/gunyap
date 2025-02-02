@@ -109,11 +109,14 @@
                 <i class="fas fa-home"></i>Anasayfa
             </a>
         </li>
+        
+       <!--
         <li class="nav-item">
             <a class="nav-link" href="{% url 'profile' %}" onclick="setActive(this)">
                 <i class="fas fa-user"></i>Profil
             </a>
         </li>
+        -->
         <li class="nav-item">
             <a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit(); setActive(this)">
                 <i class="fas fa-sign-out-alt"></i>Çıkış
@@ -152,19 +155,13 @@
             <thead>
                 <tr>
                     <th>Dosya Adı</th>
-                    <th>Sıra</th>
-                    <th>Toplam Gereken</th>
-                    <th>Dosya Türü</th>
                     <th>Yüklenme Tarihi</th>
                 </tr>
             </thead>
             <tbody>
                 {% for dosya in dosyalar %}
                 <tr>
-                    <td><a href="{{ dosya.dosya.url }}" target="_blank">{{ dosya.ad }}</a></td>
-                    <td>{{ dosya.dosya_turu_sira }}</td>
-                    <td>{{ dosya.dosya_turu.adet }}</td>
-                    <td>{{ dosya.dosya_turu.ad }}</td>
+                    <td><a href="{{ dosya.dosya.url }}" target="_blank">{{ dosya.dosya_turu.ad  }}({{ dosya.dosya_turu_sira }}/{{ dosya.dosya_turu.adet }})</a></td>
                     <td>{{ dosya.yuklenme_tarihi }}</td>
                 </tr>
                 {% empty %}
@@ -192,24 +189,14 @@ function updateTable(dosyalar) {
         let row = document.createElement('tr');
 
         let dosyaAdiCell = document.createElement('td');
-        dosyaAdiCell.innerHTML = `<a href="${dosya.dosya_url}" target="_blank">${dosya.ad}</a>`;
+        dosyaAdiCell.innerHTML = `<a href="${dosya.dosya_url}" target="_blank">${dosya.dosya_turu_ad} (${dosya.dosya_turu_sira}/${dosya.dosya_turu_adet})</a>`;
         row.appendChild(dosyaAdiCell);
-
-        let dosyaTuruCell = document.createElement('td');
-        dosyaTuruCell.textContent = dosya.dosya_turu_ad;
-        row.appendChild(dosyaTuruCell);
 
         let yuklenmeTarihiCell = document.createElement('td');
         yuklenmeTarihiCell.textContent = dosya.yuklenme_tarihi;
         row.appendChild(yuklenmeTarihiCell);
 
-        let dosyaTuruSiraCell = document.createElement('td');
-        dosyaTuruSiraCell.textContent = dosya.dosya_turu_sira;
-        row.appendChild(dosyaTuruSiraCell);
-
-        let dosyaTuruAdetCell = document.createElement('td');
-        dosyaTuruAdetCell.textContent = dosya.dosya_turu_adet;
-        row.appendChild(dosyaTuruAdetCell);
+        
 
         tableBody.appendChild(row);
     });
@@ -227,8 +214,21 @@ $(function() {
         monthNames: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
         applyLabel: 'Uygula',
         cancelLabel: 'İptal',
-
-    }
+        customRangeLabel: 'Özel Tarih Aralığı'
+    },
+    ranges: {
+            'Bugün': [moment(), moment()],
+            'Dün': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Son 7 Gün': [moment().subtract(6, 'days'), moment()],
+            'Bu Hafta': [moment().startOf('week'), moment().endOf('week')],
+            'Geçen Hafta': [moment().subtract(1, 'weeks').startOf('week'), moment().subtract(1, 'weeks').endOf('week')],
+            'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
+            'Geçen Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+        },
+    showDropdowns: true, // Yıl seçim dropdown'larını gösterir
+    linkedCalendars: false, // Takvimlerin birbirine bağlı olmaması için
+    startDate: moment().startOf('month'),
+    endDate: moment().endOf('month'),
   }, function(start, end, label) {
     var formattedStart = start.locale('tr').format('DD.MM.YYYY'); // Başlangıç tarihini Türkçe formatta
     var formattedEnd = end.locale('tr').format('DD.MM.YYYY'); // Bitiş tarihini Türkçe formatta

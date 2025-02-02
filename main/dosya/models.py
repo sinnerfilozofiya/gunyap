@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User  # Kullanıcı modelini ekliyoruz
+import os
 
 # Dosya Türü Modeli
 class DosyaTürü(models.Model):
@@ -8,11 +9,18 @@ class DosyaTürü(models.Model):
 
     def __str__(self):
         return self.ad  # Dosya türünü kullanıcıya göstereceğiz
+  
+def dosya_yolu(instance, filename):
+    """
+    Dosya yolunu dinamik olarak oluşturur.
+    """
+    # Dosya yolunun 'dosyalar/musteri_id/dosya_adi' formatında olmasını sağlarız.
+    return os.path.join('dosyalar', str(instance.musteri.id), filename)
 
 # Dosya Modeli
 class Dosya(models.Model):
     ad = models.CharField(max_length=255)  # Dosyanın adı
-    dosya = models.FileField(upload_to='dosyalar/')  # Dosya içeriği
+    dosya = models.FileField(upload_to=dosya_yolu)  # Dosya içeriği
     yuklenme_tarihi = models.DateTimeField(auto_now_add=True)  # Dosyanın yüklendiği tarih
     dosya_turu = models.ForeignKey(DosyaTürü, on_delete=models.DO_NOTHING)  # Dosya türü
     musteri = models.ForeignKey(User, related_name='dosyalar', on_delete=models.SET_NULL,null=True)  # Hangi kullanıcıya ait olduğu
