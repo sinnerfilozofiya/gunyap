@@ -154,6 +154,8 @@
         <table class="table table-striped" id="file-table">
             <thead>
                 <tr>
+                    <th>Sıra</th>
+                    <th>Dönem</th>
                     <th>Dosya Adı</th>
                     <th>Yüklenme Tarihi</th>
                 </tr>
@@ -161,8 +163,10 @@
             <tbody>
                 {% for dosya in dosyalar %}
                 <tr>
+                    <td>{{ forloop.counter }}</td> <!-- Sıra numarası ekleniyor -->
+                    <td>{{ dosya.yuklenme_tarihi|date:"Y, F" }}</td> 
                     <td><a href="{{ dosya.dosya.url }}" target="_blank">{{ dosya.dosya_turu.ad  }}({{ dosya.dosya_turu_sira }}/{{ dosya.dosya_turu.adet }})</a></td>
-                    <td>{{ dosya.yuklenme_tarihi }}</td>
+                    <td>{{ dosya.yuklenme_tarihi|date:"d F Y" }}</td>
                 </tr>
                 {% empty %}
                 <tr>
@@ -185,8 +189,18 @@ function updateTable(dosyalar) {
     let tableBody = document.querySelector('#file-table tbody');
     tableBody.innerHTML = '';  // Tabloyu temizle
 
-    dosyalar.forEach(function(dosya) {
+    dosyalar.forEach(function(dosya,index) {
         let row = document.createElement('tr');
+
+        let sıraCell = document.createElement('td');
+        sıraCell.textContent = index + 1;  // index sıfırdan başladığı için +1 ekliyoruz
+        row.appendChild(sıraCell);
+
+        let dönemCell = document.createElement('td');
+        let tarih = new Date(dosya.yuklenme_tarihi);  // Yüklenme tarihini Date objesine dönüştür
+        let formattedTarih = tarih.getFullYear() + ', ' + tarih.toLocaleString('tr-TR', { month: 'long' });  // YYYY, Ay adı formatı
+        dönemCell.textContent = formattedTarih;  // Formatlanmış tarih
+        row.appendChild(dönemCell);
 
         let dosyaAdiCell = document.createElement('td');
         dosyaAdiCell.innerHTML = `<a href="${dosya.dosya_url}" target="_blank">${dosya.dosya_turu_ad} (${dosya.dosya_turu_sira}/${dosya.dosya_turu_adet})</a>`;
