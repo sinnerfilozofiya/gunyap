@@ -22,6 +22,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils.dateparse import parse_date
+from datetime import datetime
 
 
 # def home_page(request):
@@ -339,47 +340,51 @@ def rotate_image(request, proje_id,image_id):
 def list_page(request):
     # Giriş yapan kullanıcıya ait dosyaları al
     user = request.user  # Giriş yapan kullanıcı
-    dosyalar = Dosya.objects.filter(musteri=user)  # Kullanıcıya ait dosyalar
-
-    # Filtreleme: Dosya adı ve yüklenme tarihi aralığı
-    dosya_adi = request.GET.get('dosya_adi', '')  # Dosya adı
-    daterange = request.GET.get('daterange', '')  # 'daterange' parametresini al
-    baslangic_tarihi = request.GET.get('baslangic_tarihi', '')  # Başlangıç tarihi
-    bitis_tarihi = request.GET.get('bitis_tarihi', '')  # Bitiş tarihi
-
-    print("daterange", daterange)
-    if dosya_adi:
-        dosyalar = dosyalar.filter(ad__icontains=dosya_adi)  # Dosya adı içerenler
-    if daterange:
-        # Eğer daterange var ise, aralığı ayıklayıp filtrele
-        start_date, end_date = daterange.split(' - ')  # Tarih aralığını ayır
-        #dosyalar = dosyalar.filter(tarih__range=[start_date, end_date])  # Tarih aralığına göre filtrele
-
-    # Dosya türlerini ve her türdeki adetleri al
+    dosyalar = Dosya.objects.filter(musteri=user)  # Kullanıcıya ait dosyalar 
     dosya_turleri_adet = Dosya.objects.filter(musteri=user).values('dosya_turu').annotate(adet=models.Count('dosya_turu'))
-
-    # Diğer context verilerini hazırlıyoruz
-    services = Hizmet.objects.all()
-    hizmet_tanim = HizmetAçıklama.objects.first()
-    hesaplar = Hesap.objects.all()
-    telefon = Telefon.objects.first()
-    mail = Mail.objects.first()
-    adres = Adres.objects.first()
-
-    context = {
-        'services': services,
-        'telefon': telefon,
-        'mail': mail,
-        'hesaplar': hesaplar,
-        'hizmet_tanim': hizmet_tanim,
-        'adres': adres,
-        'dosyalar': dosyalar,  # Kullanıcıya ait dosyalar
-        'dosya_turleri_adet': dosya_turleri_adet,  # Her dosya türündeki dosya sayısı
-    }
-
+    context={
+        "dosyalar":dosyalar,
+        "dosya_turleri":dosya_turleri_adet
+        }
     return render(request, 'list.html', context=context)
 
+def filter_file(request):
+    user = request.user  # Giriş yapan kullanıcı
+    dosyalar = Dosya.objects.filter(musteri=user)  # Kullanıcıya ait dosyalar
+    dosya_adi = request.GET.get('dosya_adi', '').strip()  # Dosya adı filtre parametresi
+    daterange = request.GET.get('daterange', '').strip()  # Tarih aralığı filtre parametresi
+    start_date = None
+    end_date = None
 
+    if daterange:
+        try:
+            # Tarih aralığını "DD.MM.YYYY - DD.MM.YYYY" formatında parse ediyoruz
+            start_date_str, end_date_str = daterange.split(' - ')
+            start_date = datetime.strptime(start_date_str, '%d.%m.%Y')
+            end_date = datetime.strptime(end_date_str, '%d.%m.%Y')
+        except ValueError:
+            pass  # Hatalı tarih formatı durumunda tarih aralığını dikkate almayacağız
+
+    # Eğer dosya adı varsa, dosya adını filtrele
+    if dosya_adi:
+        dosyalar = dosyalar.filter(ad__icontains=dosya_adi)
+
+    # Eğer tarih aralığı varsa, tarih aralığını filtrele
+    if start_date and end_date:
+        dosyalar = dosyalar.filter(yuklenme_tarihi__range=[start_date, end_date])
+
+    # dosya_turleri_adet = Dosya.objects.filter(musteri=user).values('dosya_turu').annotate(adet=models.Count('dosya_turu'))
+    dosyalar_data = []
+    for dosya in dosyalar:
+        dosyalar_data.append({
+            'ad': dosya.ad,
+            'dosya_url': dosya.dosya.url,
+            'dosya_turu_sira': dosya.dosya_turu_sira,
+            'dosya_turu_adet': dosya.dosya_turu.adet,
+            'dosya_turu_ad': dosya.dosya_turu.ad,
+            'yuklenme_tarihi': dosya.yuklenme_tarihi.strftime('%d.%m.%Y'),
+        })
+    return JsonResponse({'dosyalar_data': dosyalar_data})
 @login_required
 def profile_page(request):
     # Giriş yapan kullanıcıya ait dosyaları al
