@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'hesap.apps.HesapConfig',
     'kariyer.apps.KariyerConfig',
     'mesaj.apps.MesajConfig',
+    'dosya.apps.DosyaConfig',
     'ckeditor'
 
 ]
@@ -148,3 +149,4 @@ THUMBNAIL_ALIASES = {
         "small": {"size": (150, 150)}
     },
 }
+LOGOUT_REDIRECT_URL = '/'  # Örneğin anasayfa

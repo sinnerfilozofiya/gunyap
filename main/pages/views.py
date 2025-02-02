@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 from hizmet.models import Hizmet,HizmetAçıklama
 from proje.models import Proje,ProjeAçıklama,ProjeResim
@@ -6,16 +6,22 @@ from slayt.models import Slayt,Slogan,SlaytAçıklama
 from kurumsal.models import BizKimiz,Misyonumuz,Vizyonumuz,Belge
 from hesap.models import Hesap,Telefon,Mail,Adres
 from kariyer.models import KariyerAçıklama,KariyerGörsel
-from .form import ContactForm
+from dosya.models import Dosya
+from .form import ContactForm,LoginForm
 from mesaj.models import Mesaj
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from PIL import Image as PILImage
 from io import BytesIO
+from django.db import models
 import json
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.utils.dateparse import parse_date
 
 
 # def home_page(request):
@@ -226,6 +232,49 @@ def contact_page(request):
 
 
 
+def login_page(request):
+    if request.method == 'POST':
+        print("posta girdin logindeki")
+        form = LoginForm(request.POST)
+        #print(form)
+        if form.is_valid():
+            print("forma girdin", form.cleaned_data)
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+
+            print("user", user)
+            if user is not None:
+                print("buldu mu")
+                # Kullanıcı doğrulandı, oturumu açıyoruz
+                login(request, user)
+                return redirect('customer')  # 'customer' URL adını kendi projenize göre ayarlayın
+
+            else:
+                # Hatalı giriş, kullanıcıyı bilgilendirmek için bir mesaj ekleyebilirsiniz
+                messages.error(request, 'Geçersiz kullanıcı adı veya şifre')
+                return redirect('login')
+        else:
+            print(form.errors)  # Form hatalarını kontrol et
+            # Form geçersizse bir hata mesajı gösterebilirsiniz
+            messages.error(request, 'Formda hatalar var')
+    else:
+        form = LoginForm()  # İlk başta boş formu gösteriyoruz
+
+    hesaplar = Hesap.objects.all()
+    telefon = Telefon.objects.first()
+    mail = Mail.objects.first()
+    adres = Adres.objects.first()
+    context = {
+        'hesaplar': hesaplar,
+        'telefon': telefon,
+        'mail': mail,
+        'adres': adres,
+        'form': form
+    }
+    return render(request, 'login.html', context=context)
+
+
 
 
 
@@ -284,3 +333,59 @@ def rotate_image(request, proje_id,image_id):
             return JsonResponse({'error': 'Proje resmi bulunamadı.'}, status=400)
     else:
        pass
+
+
+@login_required
+def list_page(request):
+    # Giriş yapan kullanıcıya ait dosyaları al
+    user = request.user  # Giriş yapan kullanıcı
+    dosyalar = Dosya.objects.filter(musteri=user)  # Kullanıcıya ait dosyalar
+
+    # Filtreleme: Dosya adı ve yüklenme tarihi aralığı
+    dosya_adi = request.GET.get('dosya_adi', '')  # Dosya adı
+    daterange = request.GET.get('daterange', '')  # 'daterange' parametresini al
+    baslangic_tarihi = request.GET.get('baslangic_tarihi', '')  # Başlangıç tarihi
+    bitis_tarihi = request.GET.get('bitis_tarihi', '')  # Bitiş tarihi
+
+    print("daterange", daterange)
+    if dosya_adi:
+        dosyalar = dosyalar.filter(ad__icontains=dosya_adi)  # Dosya adı içerenler
+    if daterange:
+        # Eğer daterange var ise, aralığı ayıklayıp filtrele
+        start_date, end_date = daterange.split(' - ')  # Tarih aralığını ayır
+        #dosyalar = dosyalar.filter(tarih__range=[start_date, end_date])  # Tarih aralığına göre filtrele
+
+    # Dosya türlerini ve her türdeki adetleri al
+    dosya_turleri_adet = Dosya.objects.filter(musteri=user).values('dosya_turu').annotate(adet=models.Count('dosya_turu'))
+
+    # Diğer context verilerini hazırlıyoruz
+    services = Hizmet.objects.all()
+    hizmet_tanim = HizmetAçıklama.objects.first()
+    hesaplar = Hesap.objects.all()
+    telefon = Telefon.objects.first()
+    mail = Mail.objects.first()
+    adres = Adres.objects.first()
+
+    context = {
+        'services': services,
+        'telefon': telefon,
+        'mail': mail,
+        'hesaplar': hesaplar,
+        'hizmet_tanim': hizmet_tanim,
+        'adres': adres,
+        'dosyalar': dosyalar,  # Kullanıcıya ait dosyalar
+        'dosya_turleri_adet': dosya_turleri_adet,  # Her dosya türündeki dosya sayısı
+    }
+
+    return render(request, 'list.html', context=context)
+
+
+@login_required
+def profile_page(request):
+    # Giriş yapan kullanıcıya ait dosyaları al
+    user = request.user  # Giriş yapan kullanıcı
+    context = {
+        'user': user,
+    }
+
+    return render(request, 'profile.html', context=context)
