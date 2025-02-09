@@ -38,7 +38,9 @@ class Dosya(models.Model):
         print("args", args,kwargs)
         if not self.id:  # Yeni bir dosya ekleniyorsa
             if self.dosya_turu and self.musteri:
-                # Aynı dosya türüne sahip, aynı kullanıcıya ait olan dosyaların sayısını alıyoruz
-                self.dosya_turu_sira = Dosya.objects.filter(dosya_turu=self.dosya_turu, musteri=self.musteri).count() + 1
+                dosya_turu_adet = DosyaTürü.objects.get(ad=self.dosya_turu).adet
+                new_count = Dosya.objects.filter(dosya_turu=self.dosya_turu, musteri=self.musteri).count()
+                if new_count < dosya_turu_adet:
+                    self.dosya_turu_sira = new_count + 1
         
         super(Dosya, self).save(*args, **kwargs)
