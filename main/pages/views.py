@@ -18,13 +18,50 @@ import json
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from django.conf import settings
+
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 from django.contrib.auth import authenticate, login
+
 from django.contrib.auth.decorators import login_required
+
 from django.contrib import messages
+
 from django.utils.dateparse import parse_date
+
 from datetime import datetime
 from django.utils import timezone
 
+
+
+
+def send_custom_email(subject, message, from_email, recipient_list):
+    # SMTP server configuration
+    smtp_server = 'mail.gunyapgrup.com.tr'  # Replace with your SMTP server address
+    smtp_port = 587  # Replace with your SMTP server port (587 for STARTTLS)
+    smtp_username = 'bildirim@gunyapgrup.com.tr'  # Replace with your email address
+    smtp_password = '4qVb01!4h'  # Replace with your email password
+
+    # Create the email message
+    msg = MIMEMultipart()
+    msg['From'] = from_email
+    msg['To'] = ', '.join(recipient_list)
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(message, 'plain'))
+
+    # Connect to the SMTP server and send the email
+    try:
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()  # Secure the connection
+        server.login(smtp_username, smtp_password)
+        server.sendmail(from_email, recipient_list, msg.as_string())
+        server.quit()
+        print('Email sent successfully!')
+    except Exception as e:
+        print(f'Failed to send email: {e}')
 
 # def home_page(request):
 #     services=Hizmet.objects.all()
@@ -200,24 +237,23 @@ def contact_page(request):
             mesaj.save()
 
             # Prepare email content
-            email_subject = f'New Contact Message from {name}'
+            email_subject = f'{name} kişisinden yeni iletişim mesajı'
             email_message = (
-                f'You have received a new message through your contact form.\n\n'
-                f'Name: {name}\n'
-                f'Email: {email}\n'
-                f'Phone: {phone}\n'
-                f'Subject: {subject}\n'
-                f'Message:\n{message}'
+                f'İletişim formunuz aracılığıyla yeni bir mesaj aldınız.\n\n'
+                f'İsim: {name}\n'
+                f'E-posta: {email}\n'
+                f'Telefon: {phone}\n'
+                f'Konu: {subject}\n'
+                f'Mesaj:\n{message}'
             )
 
             # Send email
-            # send_mail(
-            #     subject=email_subject,
-            #     message=email_message,
-            #     from_email=settings.DEFAULT_FROM_EMAIL,
-            #     recipient_list=settings.EMAIL_RECIPIENT_LIST,
-            #     fail_silently=False,
-            # )
+            send_custom_email(
+                subject=email_subject,
+                message=email_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=settings.EMAIL_RECIPIENT_LIST
+            )
 
     hesaplar = Hesap.objects.all()
     telefon = Telefon.objects.first()
