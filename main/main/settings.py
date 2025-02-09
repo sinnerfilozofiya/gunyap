@@ -26,18 +26,11 @@ SECRET_KEY = 'django-insecure-h1j3gv&1@1k#r!+=-mo5he!v2@91__jb6+to7!k=^grw*m!0_-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-CSRF_TRUSTED_ORIGINS = ['https://test.gunyapgrup.com.tr','http://68.183.242.232']
+ALLOWED_HOSTS = ['https://www.gunyapgrup.com.tr', 'www.gunyapgrup.com.tr']
+CSRF_TRUSTED_ORIGINS = ['https://www.gunyapgrup.com.tr']
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.domain.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your-email@gmail.com'
-EMAIL_HOST_PASSWORD = 'your-email-password'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_RECIPIENT_LIST = ['your-email@gmail.com']
-
+DEFAULT_FROM_EMAIL = 'bildirim@gunyapgrup.com.tr'
+EMAIL_RECIPIENT_LIST = ['info@gunyapgrup.com.tr', 'muhasebe@gunyapgrup.com.tr']  # Add your recipient list here
 # Application definition
 
 INSTALLED_APPS = [
