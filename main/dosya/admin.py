@@ -3,16 +3,16 @@ from .models import Dosya, DosyaTürü
 
 # DosyaTürü admin ayarları
 class DosyaTürüAdmin(admin.ModelAdmin):
-    list_display = ('ad', 'adet')  # Dosya türü adı ve toplam adetini görüntüle
+    list_display = ('ad', 'adet','sene')  # Dosya türü adı ve toplam adetini görüntüle
     search_fields = ('ad',)  # Dosya türüne göre arama yapılabilmesi için
     list_filter = ('adet',)  # Adet'e göre filtreleme yapılabilmesi için
 
 # Dosya admin ayarları
 class DosyaAdmin(admin.ModelAdmin):
-    list_display = ('ad', 'dosya_turu', 'musteri', 'yuklenme_tarihi', 'dosya_turu_sira',)  # Görüntülenecek alanlar
-    search_fields = ('ad', 'dosya_turu__ad', 'musteri__username')  # Dosya adı, dosya türü ve müşteri adı ile arama yapılabilir
-    list_filter = ('dosya_turu', 'musteri')  # Dosya türüne ve müşteri adına göre filtreleme yapılabilir
-    autocomplete_fields = ('dosya_turu', 'musteri')  # Dosya türü ve müşteri isimlerinin gösterilmesi
+    list_display = ('dosya_turu', 'sirket', 'dosya_turu_sira','degisiklik_tarihi', 'degisiklik_yapan_kisi')  # Görüntülenecek alanlar
+    search_fields = ('dosya_turu__ad', )  # Dosya adı, dosya türü ve müşteri adı ile arama yapılabilir
+    list_filter = ('dosya_turu__ad', 'sirket')  # Dosya türüne ve müşteri adına göre filtreleme yapılabilir
+    autocomplete_fields = ('dosya_turu','sirket')  # Dosya türü ve müşteri isimlerinin gösterilmesi
     exclude = ('dosya_turu_sira',) 
 
        # Ensure 'yuklenme_tarihi' is not readonly
@@ -21,10 +21,19 @@ class DosyaAdmin(admin.ModelAdmin):
             return []  # All fields editable
         return []  # Editable during obje
     # Dosya düzenleme formunda, dosya türü ve müşteri seçimlerini daha iyi yönetmek için
-    fieldsets = (
+    fieldsets = ( 
         (None, {
-            'fields': ('ad', 'dosya_turu', 'musteri', 'yuklenme_tarihi', 'dosya_turu_sira')
-        }),)
+            'fields': ('dosya_turu', 'dosya', 'sirket', 'yuklenme_tarihi',)
+        }),
+    )
+
+    def save_model(self, request, obj, form, change):
+        if change:  # If the object is being updated
+            # Check if any field has been modified
+            if form.has_changed():
+                obj.degisiklik_yapan_kisi = request.user  # Only update if there's a change
+        super().save_model(request, obj, form, change)
+
 # Admin'e modelleri kaydediyoruz
 admin.site.register(DosyaTürü, DosyaTürüAdmin)
 admin.site.register(Dosya, DosyaAdmin)

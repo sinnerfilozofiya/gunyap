@@ -4,15 +4,16 @@ from django.contrib.auth.models import User, Group
 class CustomAdminSite(admin.AdminSite):
     def get_app_list(self, request,app_label=None):
         ordering = {
-            'Dosya':1,
-            'Kurumsal':2,
-            'Proje':3,
-            'Hizmet':4,
-            'Kariyer':5,
-            'Mesaj':6,
-            'Hesap':7,
-            'Users':8,
-            'Slayt':9,
+            'Sirket':1,
+            'Dosya':2,
+            'Kurumsal':3,
+            'Proje':4,
+            'Hizmet':5,
+            'Kariyer':6,
+            'Mesaj':7,
+            'Hesap':8,
+            'Users':9,
+            'Slayt':10,
         }
         app_dict = super().get_app_list(request)
         sorted_apps = sorted(app_dict, key=lambda x: ordering.get(x['name'], 0))

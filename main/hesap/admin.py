@@ -39,7 +39,8 @@ class AdresAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
-
+    
+    
 class CustomUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_active', 'last_login')
     search_fields = ('username', 'email', 'first_name', 'last_name')
@@ -71,7 +72,7 @@ class CustomGroupAdmin(GroupAdmin):
     search_fields = ('name',)
 
 # TO DO yeni grup eklemek istersek bunu açıcaz
-#admin.site.register(Group, CustomGroupAdmin)
+admin.site.register(Group, CustomGroupAdmin)
 
 admin.site.register(Adres, AdresAdmin)
 admin.site.register(Telefon, TelefonAdmin)

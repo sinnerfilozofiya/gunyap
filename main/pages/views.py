@@ -34,7 +34,7 @@ from django.utils.dateparse import parse_date
 from datetime import datetime
 from django.utils import timezone
 
-
+from sirket.models import SirketCalisan
 
 
 def send_custom_email(subject, message, from_email, recipient_list):
@@ -376,9 +376,12 @@ def rotate_image(request, proje_id,image_id):
 @login_required
 def list_page(request):
     # Giriş yapan kullanıcıya ait dosyaları al
-    user = request.user  # Giriş yapan kullanıcı
-    dosyalar = Dosya.objects.filter(musteri=user)  # Kullanıcıya ait dosyalar 
-    dosya_turleri_adet = Dosya.objects.filter(musteri=user).values('dosya_turu').annotate(adet=models.Count('dosya_turu'))
+    user=SirketCalisan.objects.get(calisan=request.user)
+    print("selam user", user)
+    print("selam user2", user.__dict__)
+    dosyalar = Dosya.objects.filter(sirket=user.sirket)  # Kullanıcıya ait dosyalar 
+    print("selam dosyalar", dosyalar)
+    dosya_turleri_adet = dosyalar.values('dosya_turu').annotate(adet=models.Count('dosya_turu'))
     context={
         "dosyalar":dosyalar,
         "dosya_turleri":dosya_turleri_adet
@@ -386,8 +389,8 @@ def list_page(request):
     return render(request, 'list.html', context=context)
 
 def filter_file(request):
-    user = request.user  # Giriş yapan kullanıcı
-    dosyalar = Dosya.objects.filter(musteri=user)  # Kullanıcıya ait dosyalar
+    user=SirketCalisan.objects.get(calisan=request.user)
+    dosyalar = Dosya.objects.filter(sirket=user.sirket)  # Kullanıcıya ait dosyalar
     dosya_adi = request.GET.get('dosya_adi', '').strip()  # Dosya adı filtre parametresi
     daterange = request.GET.get('daterange', '').strip()  # Tarih aralığı filtre parametresi
     start_date = None
