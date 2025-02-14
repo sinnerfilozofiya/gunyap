@@ -32,7 +32,10 @@ class DosyaAdmin(admin.ModelAdmin):
             # Check if any field has been modified
             if form.has_changed():
                 obj.degisiklik_yapan_kisi = request.user  # Only update if there's a change
+        else:
+            obj.degisiklik_yapan_kisi = request.user  # Only update if there's a change
         super().save_model(request, obj, form, change)
+
 
 # Admin'e modelleri kaydediyoruz
 admin.site.register(DosyaTürü, DosyaTürüAdmin)

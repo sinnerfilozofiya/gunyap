@@ -377,12 +377,11 @@ def rotate_image(request, proje_id,image_id):
 def list_page(request):
     # Giriş yapan kullanıcıya ait dosyaları al
     user=SirketCalisan.objects.get(calisan=request.user)
-    print("selam user", user)
-    print("selam user2", user.__dict__)
-    dosyalar = Dosya.objects.filter(sirket=user.sirket)  # Kullanıcıya ait dosyalar 
-    print("selam dosyalar", dosyalar)
+    dosyalar = Dosya.objects.filter(sirket=user.sirket) 
     dosya_turleri_adet = dosyalar.values('dosya_turu').annotate(adet=models.Count('dosya_turu'))
     context={
+        "user":request.user,
+        "sirket":user.sirket,
         "dosyalar":dosyalar,
         "dosya_turleri":dosya_turleri_adet
         }

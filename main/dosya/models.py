@@ -39,7 +39,6 @@ class Dosya(models.Model):
         ordering = ['-yuklenme_tarihi']  # Yüklenme tarihine göre sıralama
 
     def save(self, *args, **kwargs):
-        # Dosyanın türü içindeki sırasını belirlemek için
         request = kwargs.get('request', None)
         if not self.id:  # Yeni bir dosya ekleniyorsa
             if self.dosya_turu and self.sirket:

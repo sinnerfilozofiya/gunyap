@@ -72,7 +72,7 @@ class CustomGroupAdmin(GroupAdmin):
     search_fields = ('name',)
 
 # TO DO yeni grup eklemek istersek bunu açıcaz
-admin.site.register(Group, CustomGroupAdmin)
+#admin.site.register(Group, CustomGroupAdmin)
 
 admin.site.register(Adres, AdresAdmin)
 admin.site.register(Telefon, TelefonAdmin)
