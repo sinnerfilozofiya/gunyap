@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'kariyer.apps.KariyerConfig',
     'mesaj.apps.MesajConfig',
     'dosya.apps.DosyaConfig',
+    'sirket.apps.SirketConfig',
     'ckeditor'
 
 ]

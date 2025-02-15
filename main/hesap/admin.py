@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Hesap,Telefon,Mail,Adres
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import GroupAdmin
 
 class HesapAdmin(admin.ModelAdmin):
     
@@ -38,7 +39,8 @@ class AdresAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
-
+    
+    
 class CustomUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_active', 'last_login')
     search_fields = ('username', 'email', 'first_name', 'last_name')
@@ -52,10 +54,25 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'email', 'first_name', 'last_name','is_staff',)}
+            'fields': ('username', 'password1', 'password2', 'email', 'first_name','last_name','is_staff','groups')}
         ),
     )
 
+
+class CustomGroupAdmin(GroupAdmin):
+    # Customize the fields to display in the admin form if needed
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'permissions'),
+        }),
+    )
+
+    # You can also modify list display, search fields, etc.
+    list_display = ('name',)
+    search_fields = ('name',)
+
+# TO DO yeni grup eklemek istersek bunu açıcaz
+#admin.site.register(Group, CustomGroupAdmin)
 
 admin.site.register(Adres, AdresAdmin)
 admin.site.register(Telefon, TelefonAdmin)
