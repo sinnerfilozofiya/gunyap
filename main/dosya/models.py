@@ -28,7 +28,7 @@ class Dosya(models.Model):
     yuklenme_tarihi = models.DateTimeField(default=timezone.now)  # Dosyanın yüklendiği tarih
     dosya_turu = models.ForeignKey(DosyaTürü, on_delete=models.DO_NOTHING)  # Dosya türü
     sirket = models.ForeignKey(Sirket, related_name='dosyalar', on_delete=models.SET_NULL,null=True)  # Hangi kullanıcıya ait olduğu
-    dosya_turu_sira = models.IntegerField(default=0)  # Bu dosyanın, o dosya türü içindeki sırası
+    dosya_turu_sira = models.IntegerField(default=1)  # Bu dosyanın, o dosya türü içindeki sırası
     degisiklik_tarihi = models.DateTimeField(auto_now=True)  # Son değişiklik tarihi
     degisiklik_yapan_kisi = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)  # Değişikliği yapan kişi (User)
 
@@ -36,19 +36,22 @@ class Dosya(models.Model):
         return f"{self.dosya_turu}"
 
     class Meta:
-        ordering = ['-yuklenme_tarihi']  # Yüklenme tarihine göre sıralama
+        ordering = ['-yuklenme_tarihi'] 
 
     def save(self, *args, **kwargs):
         request = kwargs.get('request', None)
-        if not self.id:  # Yeni bir dosya ekleniyorsa
+        if not self.id: 
             if self.dosya_turu and self.sirket:
                 dosya_turu_adet = self.dosya_turu.adet
                 new_count = Dosya.objects.filter(dosya_turu=self.dosya_turu, sirket=self.sirket).count()
-                print("new count", new_count)
-                if new_count < dosya_turu_adet:
-                    self.dosya_turu_sira = new_count + 1
-                else:
-                    if request:  # Check if request is available
+                if new_count >= dosya_turu_adet:
+                    if request:
                         messages.error(request, "Bu türden ekleyeceğiniz maksimum dosya sayısını aştınız.")
-                    return  # Skip the save operation if the limit is exceeded
+                    return 
+        else:
+            pass
         super(Dosya, self).save(*args, **kwargs)
+        files = Dosya.objects.filter(dosya_turu=self.dosya_turu, sirket=self.sirket).order_by('yuklenme_tarihi')
+        for index, file in enumerate(files, start=1):
+            file.dosya_turu_sira = index
+            Dosya.objects.filter(id=file.id).update(dosya_turu_sira=index) 

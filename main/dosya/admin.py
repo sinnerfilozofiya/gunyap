@@ -9,11 +9,10 @@ class DosyaTürüAdmin(admin.ModelAdmin):
 
 # Dosya admin ayarları
 class DosyaAdmin(admin.ModelAdmin):
-    list_display = ('dosya_turu', 'sirket', 'dosya_turu_sira','degisiklik_tarihi', 'degisiklik_yapan_kisi')  # Görüntülenecek alanlar
+    list_display = ('dosya_turu', 'sirket', 'yuklenme_tarihi','dosya_turu_sira','degisiklik_tarihi', 'degisiklik_yapan_kisi')  # Görüntülenecek alanlar
     search_fields = ('dosya_turu__ad', )  # Dosya adı, dosya türü ve müşteri adı ile arama yapılabilir
     list_filter = ('dosya_turu__ad', 'sirket')  # Dosya türüne ve müşteri adına göre filtreleme yapılabilir
     autocomplete_fields = ('dosya_turu','sirket')  # Dosya türü ve müşteri isimlerinin gösterilmesi
-    exclude = ('dosya_turu_sira',) 
 
        # Ensure 'yuklenme_tarihi' is not readonly
     def get_readonly_fields(self, request, obj=None):
