@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['https://www.gunyapgrup.com.tr', 'www.gunyapgrup.com.tr', "127.0.0.1"]
 CSRF_TRUSTED_ORIGINS = ['https://www.gunyapgrup.com.tr']
+CSRF_USE_SESSIONS = True 
 
 DEFAULT_FROM_EMAIL = 'bildirim@gunyapgrup.com.tr'
 EMAIL_RECIPIENT_LIST = ['info@gunyapgrup.com.tr', 'muhasebe@gunyapgrup.com.tr']  # Add your recipient list here

@@ -95,13 +95,45 @@
         .logout-btn:hover {
             background-color: #c82333; /* Hover'da biraz daha koyu kırmızı */
         }
+.user-info {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    min-width: 150px;
+}
+
+.user-info h5 {
+    margin: 0;
+    font-size: 16px;
+    color: #212529;
+    font-weight: bold;
+}
+
+.user-info p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #6c757d;
+    font-weight: normal;
+}
 
     </style>
 </head>
-<body>
 
 <!-- Sidebar -->
 <div class="sidebar">
+    <div class="user-info">
+        <h5>Kullanıcı: {{ user }}</h5>
+        <p>Şirket: {{ sirket }}</p>
+    </div>
+    
     <h4>Menü</h4>
     <ul class="nav flex-column">
         <li class="nav-item">
@@ -127,10 +159,12 @@
 
 <!-- Content -->
 <div class="content">
+
     <!-- Çıkış yap butonu -->
     <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
         {% csrf_token %}
     </form>
+    
     <h2>Dosya Listesi</h2>
 
     <!-- Filtreleme Formu -->
