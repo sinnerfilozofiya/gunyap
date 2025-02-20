@@ -27,7 +27,7 @@
             background-color: #343a40; /* Koyu arka plan rengi */
             padding-top: 20px;
             padding-left: 20px;
-            height: 100vh;
+            height: 200vh;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -96,9 +96,6 @@
             background-color: #c82333; /* Hover'da biraz daha koyu kırmızı */
         }
 .user-info {
-    position: absolute;
-    top: 10px;
-    right: 20px;
     background-color: #f8f9fa;
     padding: 12px 15px;
     border-radius: 8px;
@@ -129,10 +126,7 @@
 
 <!-- Sidebar -->
 <div class="sidebar">
-    <div class="user-info">
-        <h5>Kullanıcı: {{ user }}</h5>
-        <p>Şirket: {{ sirket }}</p>
-    </div>
+    
     
     <h4>Menü</h4>
     <ul class="nav flex-column">
@@ -164,11 +158,21 @@
     <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
         {% csrf_token %}
     </form>
-    
-    <h2>Dosya Listesi</h2>
+
 
     <!-- Filtreleme Formu -->
     <form id="filter-form" class="mb-3">
+        <div class="row">
+            <div class="col-md-9">
+                <h2>Dosya Listesi</h2>
+            </div>
+            <div class="col-md-3">
+                <div class="user-info">
+                    <h5>Kullanıcı: {{ user }}</h5>
+                    <p>Şirket: {{ sirket }}</p>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-3">
                 <input type="text" name="dosya_adi" id="filename" class="form-control" placeholder="Dosya Adı">
