@@ -35,7 +35,7 @@ from datetime import datetime
 from django.utils import timezone
 
 from sirket.models import SirketCalisan
-
+from django.contrib.auth import logout
 
 def send_custom_email(subject, message, from_email, recipient_list):
     # SMTP server configuration
@@ -272,11 +272,9 @@ def contact_page(request):
 
 def login_page(request):
     if request.method == 'POST':
-        print("posta girdin logindeki")
         form = LoginForm(request.POST)
         #print(form)
         if form.is_valid():
-            print("forma girdin", form.cleaned_data)
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
@@ -375,17 +373,24 @@ def rotate_image(request, proje_id,image_id):
 
 @login_required
 def list_page(request):
-    # Giriş yapan kullanıcıya ait dosyaları al
-    user=SirketCalisan.objects.get(calisan=request.user)
-    dosyalar = Dosya.objects.filter(sirket=user.sirket) 
-    dosya_turleri_adet = dosyalar.values('dosya_turu').annotate(adet=models.Count('dosya_turu'))
-    context={
-        "user":request.user,
-        "sirket":user.sirket,
-        "dosyalar":dosyalar,
-        "dosya_turleri":dosya_turleri_adet
-        }
-    return render(request, 'list.html', context=context)
+    try:
+        print("user in list_page", request.user)
+        user=SirketCalisan.objects.get(calisan=request.user)
+        dosyalar = Dosya.objects.filter(sirket=user.sirket) 
+        dosya_turleri_adet = dosyalar.values('dosya_turu').annotate(adet=models.Count('dosya_turu'))
+        context={
+            "user":request.user,
+            "sirket":user.sirket,
+            "dosyalar":dosyalar,
+            "dosya_turleri":dosya_turleri_adet
+            }
+        return render(request, 'list.html', context=context)
+    except SirketCalisan.DoesNotExist:
+        # Eğer eşleşen kullanıcı bulunmazsa, logout yap ve login sayfasına yönlendir
+        print(f"Kullanıcı {request.user} için eşleşen SirketCalisan kaydı bulunamadı.")
+        logout(request)  # Kullanıcıyı çıkış yap
+        return redirect('/kullanici')  #
+
 
 def filter_file(request):
     user=SirketCalisan.objects.get(calisan=request.user)
@@ -421,7 +426,6 @@ def filter_file(request):
         else:
             dosya_tarihi_local = dosya.yuklenme_tarihi
         dosyalar_data.append({
-            'ad': dosya.ad,
             'dosya_url': dosya.dosya.url,
             'dosya_turu_sira': dosya.dosya_turu_sira,
             'dosya_turu_adet': dosya.dosya_turu.adet,

@@ -241,7 +241,12 @@ function updateTable(dosyalar) {
         row.appendChild(sıraCell);
 
         let dönemCell = document.createElement('td');
-        let tarih = new Date(dosya.yuklenme_tarihi);  // Yüklenme tarihini Date objesine dönüştür
+        let tarihString = dosya.yuklenme_tarihi;  // "18.02.2025"
+
+        let parts = tarihString.split('.');  // ["18", "02", "2025"]
+        let formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;  // "2025-02-18"
+
+        let tarih = new Date(formattedDate);  // Yüklenme tarihini Date objesine dönüştür
         let formattedTarih = tarih.getFullYear() + ', ' + tarih.toLocaleString('tr-TR', { month: 'long' });  // YYYY, Ay adı formatı
         dönemCell.textContent = formattedTarih;  // Formatlanmış tarih
         row.appendChild(dönemCell);
