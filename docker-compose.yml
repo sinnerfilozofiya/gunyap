@@ -8,8 +8,10 @@ services:
     volumes:
       - .:/app
       - db_volume:/app/main/db_backup
-    command: python main/manage.py runserver 0.0.0.0:8000
-
+    #command: python main/manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python main/manage.py collectstatic --noinput &&
+             python main/manage.py runserver 0.0.0.0:8000"
     network_mode: host
     restart: always
 
