@@ -9,10 +9,10 @@ class DosyaTürüAdmin(admin.ModelAdmin):
 
 # Dosya admin ayarları
 class DosyaAdmin(admin.ModelAdmin):
-    list_display = ('dosya_turu', 'sirket', 'yuklenme_tarihi','dosya_turu_sira','degisiklik_tarihi', 'degisiklik_yapan_kisi')  # Görüntülenecek alanlar
-    search_fields = ('dosya_turu__ad', )  # Dosya adı, dosya türü ve müşteri adı ile arama yapılabilir
-    list_filter = ('dosya_turu__ad', 'sirket')  # Dosya türüne ve müşteri adına göre filtreleme yapılabilir
-    autocomplete_fields = ('dosya_turu','sirket')  # Dosya türü ve müşteri isimlerinin gösterilmesi
+    list_display = ('olcum_turu', 'sirket', 'yuklenme_tarihi','olcum_turu_sira','degisiklik_tarihi', 'degisiklik_yapan_kisi')  # Görüntülenecek alanlar
+    search_fields = ('olcum_turu__ad', )  # Dosya adı, dosya türü ve müşteri adı ile arama yapılabilir
+    list_filter = ('olcum_turu__ad', 'sirket')  # Dosya türüne ve müşteri adına göre filtreleme yapılabilir
+    autocomplete_fields = ('olcum_turu','sirket')  # Dosya türü ve müşteri isimlerinin gösterilmesi
 
        # Ensure 'yuklenme_tarihi' is not readonly
     def get_readonly_fields(self, request, obj=None):
@@ -22,7 +22,7 @@ class DosyaAdmin(admin.ModelAdmin):
     # Dosya düzenleme formunda, dosya türü ve müşteri seçimlerini daha iyi yönetmek için
     fieldsets = ( 
         (None, {
-            'fields': ('dosya_turu', 'dosya', 'sirket', 'yuklenme_tarihi',)
+            'fields': ('olcum_turu', 'dosya', 'sirket', 'yuklenme_tarihi',)
         }),
     )
 
@@ -39,5 +39,5 @@ class DosyaAdmin(admin.ModelAdmin):
 # Admin'e modelleri kaydediyoruz
 admin.site.register(DosyaTürü, DosyaTürüAdmin)
 admin.site.register(Dosya, DosyaAdmin)
-Dosya._meta.verbose_name_plural = "Dosyalar"
-DosyaTürü._meta.verbose_name_plural = "Dosya Türleri"
+Dosya._meta.verbose_name_plural = "Raporlar"
+DosyaTürü._meta.verbose_name_plural = "Ölçüm Türleri"

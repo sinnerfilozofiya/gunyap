@@ -17,6 +17,10 @@ class CustomAdminSite(admin.AdminSite):
         }
         app_dict = super().get_app_list(request)
         sorted_apps = sorted(app_dict, key=lambda x: ordering.get(x['name'], 0))
+        for app in sorted_apps:
+            if app['name'] == 'Dosya':
+                app['name'] = 'Rapor'  # 'Dosya' adı 'Rapor' olarak değiştirildi
+
         app_dict_sorted = {app['name']: app for app in sorted_apps}
         return list(app_dict_sorted.values())
 
