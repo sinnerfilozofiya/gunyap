@@ -29,6 +29,8 @@
   <!-- Template Main CSS File -->
   <link href="{% static  'css/main.css' %}" rel="stylesheet">
   <style>
+
+
 </style>
   
 </head>
@@ -79,20 +81,56 @@
         </div>
 
         <div class="row gy-5">
-          {% for belge in belgeler %}
-              <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
-                  <div class="member-img position-relative">
-                      <a href="#" title="İncele" class="details-link" data-bs-toggle="modal" data-bs-target="#documentModal" data-url="{{ belge.belge.url }}" data-title="{{ belge.ad }}">
-                          <img src="{{ belge.kapak_resmi.url}}" class="img-fluid" alt="">
-                          <div class="overlay-text position-absolute translate-middle-y text-black">
-                              {{ belge.ad }}
-                          </div>
+          {% for proje in belgeler %} 
+          <div class="col-lg-4 col-md-6 member aos-init aos-animate">
+            <div class="portfolio-content">
+              <!-- Image wrapper -->
+              <div class="member-img">
+                <img src="{{ proje.kapak_resmi.url }}" class="img-fluid services-img" alt="{{ proje.ad }}">
+              </div>
+              <!-- End of image wrapper -->
+              
+              <div class="portfolio-info">
+                <!-- <h4>{{ proje.kategori.ad }}</h4> -->
+                
+                <!-- Render the zoom-in icon for the first image -->
+                {% if proje.belgeler.all %}
+                  {% with proje.belgeler.all|first as first_image %}
+                      <a href="{% if first_image.pdf_resim %}{{ first_image.pdf_resim.url }}{% else %}{{ first_image.dosya.url }}{% endif %}" 
+                      title="{{ proje.ad }}" 
+                      data-gallery="portfolio-gallery-{{ proje.ad }}" 
+                      class="glightbox preview-link">
                       </a>
-                  </div>
-                  <div class="member-info text-center">
-                      <h4><a href="#" data-bs-toggle="modal" data-bs-target="#documentModal" data-url="{{ belge.belge.url }}" data-title="{{ belge.ad }}">{{ belge.ad }}</a></h4>
-                  </div>
-              </div><!-- End Team Member -->
+                  {% endwith %}
+              {% endif %}
+
+              <!-- Render the zoom-in icons for the remaining images but hide them -->
+              {% for resim in proje.belgeler.all %}
+                  {% if not forloop.first %}
+                      <a href="{% if resim.pdf_resim %}{{ resim.pdf_resim.url }}{% else %}{{ resim.dosya.url }}{% endif %}" 
+                      title="{{ resim.belge.ad }}" 
+                      data-gallery="portfolio-gallery-{{ resim.belge.ad }}" 
+                      class="glightbox preview-link d-none">
+                    </a>
+
+                  {% endif %}
+              {% endfor %}
+                
+                <!-- <a href="{% url 'project_details' proje.id %}" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a> -->
+            </div>
+
+              
+              <div>
+                
+              </div>
+            </div>
+            <br>
+            <div class="text-container-project">
+              <h4>
+                <a>{{ proje.ad }}</a>
+              </h4>
+            </div>
+          </div>
           {% endfor %}
       </div>
 
