@@ -50,35 +50,15 @@ class Vizyonumuz(models.Model):
          return f"Vizyonumuz"
 
 
-class Belge(models.Model):
-    ad=models.CharField(max_length=200, unique=False,null=False)
-    kapak_resmi=models.ImageField(upload_to=cover_directory_path,default="kapak/taban.jpeg")
-    def __str__(self):
-         return self.ad
-    from django.core.exceptions import ValidationError
-from django.db import models
 
 class Belge(models.Model):
     ad = models.CharField(max_length=200, unique=False, null=False)
-    kapak_resmi = models.ImageField(upload_to='cover_directory_path', default="kapak/taban.jpeg")
+    kapak_resmi = models.ImageField(upload_to=cover_directory_path, default="kapak/taban.jpeg")
     
     def __str__(self):
         return self.ad
 
-    def save(self, *args, **kwargs):
-        # Check if the Belge instance has at least one associated BelgeOge
-        if not self.belgeler.exists():  # 'belgeler' is the related_name for the ForeignKey in BelgeOge
-            raise ValidationError('Every Belge must have at least one BelgeOge.')
-        
-        super().save(*args, **kwargs)  # Call the original save() method
 
-class BelgeOge(models.Model):
-    belge = models.ForeignKey(Belge, related_name='belgeler', on_delete=models.SET_NULL, null=True)
-    dosya = models.FileField(upload_to='document_directory_path', null=True)
-    pdf_resim = models.ImageField(upload_to='document_image_directory_path', null=True, blank=True)
-    
-    def __str__(self):
-        return f"{self.belge.ad} - {self.dosya.name if self.dosya else 'No file'}"
 
 class BelgeOge(models.Model):
     belge = models.ForeignKey(Belge, related_name='belgeler', on_delete=models.SET_NULL,null=True)
