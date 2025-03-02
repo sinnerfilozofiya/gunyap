@@ -11,8 +11,9 @@ urlpatterns = [
     path('about/', views.about_page,name='about'),
     path('services/', views.services_page,name='services'),
     path('projects/', views.projects_page,name='projects'),
+    path('documents/', views.deneme_page,name='documents'),
     path('contact/', views.contact_page,name='contact'),
-    path('documents/',views.documents_page,name='documents'),
+    #path('documents/',views.documents_page,name='documents'),
     path('career/',views.career_page,name='career'),
     path('/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 

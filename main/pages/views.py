@@ -208,6 +208,35 @@ def projects_page(request):
     return render(request, 'projects.html', context=context)
 
 
+def deneme_page(request):
+    # Retrieve the filter from the request parameters or use '*' as a default to indicate no filter
+    telefon = Telefon.objects.first()
+    mail=Mail.objects.first()
+    # Fetch all necessary objects from the database
+    hesaplar = Hesap.objects.all()
+
+
+    # Paginator setup: paginate the projects_list with 9 items per page
+    belgeler=Belge.objects.all()
+    paginator = Paginator(belgeler, 10)
+    page_number = request.GET.get('page')
+    belgeler = paginator.get_page(page_number)
+    adres=Adres.objects.first()
+
+    
+    # Prepare the context with all necessary data
+    context = {
+        'telefon':telefon,
+        'mail':mail,
+        'adres':adres,
+        'hesaplar': hesaplar,
+        'belgeler': belgeler
+    }
+
+    # Render the 'projects.html' template with the provided context
+    return render(request, 'new_documents.html', context=context)
+
+
 
 
 
@@ -323,12 +352,14 @@ def documents_page(request):
     telefon = Telefon.objects.first()
     mail=Mail.objects.first()
     adres=Adres.objects.first()
+    projects = Proje.objects.all()
     context={            
              'belgeler':belgeler,
              'hesaplar':hesaplar,
              'telefon':telefon,
              'mail':mail,
-             'adres':adres
+             'adres':adres,
+             'projects':projects
             }
     return render(request,'documents.html',context=context)
 
@@ -377,7 +408,7 @@ def list_page(request):
         print("user in list_page", request.user)
         user=SirketCalisan.objects.get(calisan=request.user)
         dosyalar = Dosya.objects.filter(sirket=user.sirket) 
-        dosya_turleri_adet = dosyalar.values('dosya_turu').annotate(adet=models.Count('dosya_turu'))
+        dosya_turleri_adet = dosyalar.values('olcum_turu').annotate(adet=models.Count('olcum_turu'))
         context={
             "user":request.user,
             "sirket":user.sirket,
@@ -411,7 +442,7 @@ def filter_file(request):
 
     # Eğer dosya adı varsa, dosya adını filtrele
     if dosya_adi:
-        dosyalar = dosyalar.filter(dosya_turu__ad__icontains=dosya_adi)
+        dosyalar = dosyalar.filter(olcum_turu__ad__icontains=dosya_adi)
 
     # Eğer tarih aralığı varsa, tarih aralığını filtrele
     if start_date and end_date:
@@ -427,9 +458,9 @@ def filter_file(request):
             dosya_tarihi_local = dosya.yuklenme_tarihi
         dosyalar_data.append({
             'dosya_url': dosya.dosya.url,
-            'dosya_turu_sira': dosya.dosya_turu_sira,
-            'dosya_turu_adet': dosya.dosya_turu.adet,
-            'dosya_turu_ad': dosya.dosya_turu.ad,
+            'dosya_turu_sira': dosya.olcum_turu_sira,
+            'dosya_turu_adet': dosya.olcum_turu.adet,
+            'dosya_turu_ad': dosya.olcum_turu.ad,
             'yuklenme_tarihi': dosya_tarihi_local.strftime('%d.%m.%Y'),
         })
     return JsonResponse({'dosyalar_data': dosyalar_data})

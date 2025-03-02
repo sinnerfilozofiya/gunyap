@@ -1,5 +1,9 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.db import models
+from django.core.files.base import ContentFile
+from django.forms import ValidationError
+import fitz 
 
 def about_directory_path(instance,filename):
     return f'hakkimizda/{filename}'
@@ -13,7 +17,9 @@ def cover_directory_path(instance,filename):
     return f'kapak/{belge_adi}/{filename}'
 
 def document_directory_path(instance,filename):
-    return f'documents/{filename}'
+    return f'documents/{instance.belge.pk}/{filename}'
+def document_image_directory_path(instance,filename):
+    return f'documents/image/{instance.belge.pk}/{filename}'
 
 class Madde(models.Model):
     ad=models.CharField(max_length=200, unique=True,null=False)
@@ -46,11 +52,72 @@ class Vizyonumuz(models.Model):
 
 class Belge(models.Model):
     ad=models.CharField(max_length=200, unique=False,null=False)
-    belge = models.FileField(null=True,upload_to=document_directory_path)
     kapak_resmi=models.ImageField(upload_to=cover_directory_path,default="kapak/taban.jpeg")
     def __str__(self):
          return self.ad
+    from django.core.exceptions import ValidationError
+from django.db import models
 
+class Belge(models.Model):
+    ad = models.CharField(max_length=200, unique=False, null=False)
+    kapak_resmi = models.ImageField(upload_to='cover_directory_path', default="kapak/taban.jpeg")
+    
+    def __str__(self):
+        return self.ad
+
+    def save(self, *args, **kwargs):
+        # Check if the Belge instance has at least one associated BelgeOge
+        if not self.belgeler.exists():  # 'belgeler' is the related_name for the ForeignKey in BelgeOge
+            raise ValidationError('Every Belge must have at least one BelgeOge.')
+        
+        super().save(*args, **kwargs)  # Call the original save() method
+
+class BelgeOge(models.Model):
+    belge = models.ForeignKey(Belge, related_name='belgeler', on_delete=models.SET_NULL, null=True)
+    dosya = models.FileField(upload_to='document_directory_path', null=True)
+    pdf_resim = models.ImageField(upload_to='document_image_directory_path', null=True, blank=True)
+    
+    def __str__(self):
+        return f"{self.belge.ad} - {self.dosya.name if self.dosya else 'No file'}"
+
+class BelgeOge(models.Model):
+    belge = models.ForeignKey(Belge, related_name='belgeler', on_delete=models.SET_NULL,null=True)
+    dosya = models.FileField(upload_to=document_directory_path,null=True)
+    pdf_resim = models.ImageField(upload_to=document_image_directory_path, null=True, blank=True)
+    
+    def __str__(self):
+        return self.dosya.url
+    
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super().save(*args, **kwargs)
+        if self.dosya and self.dosya.name.endswith('.pdf'):
+            # Convert PDF to Image
+            pdf_image = self.convert_pdf_to_image(self.dosya.path)
+            
+            # Generate the filename for the image
+            image_filename = f"{self.dosya.name.split('.')[0]}.png"
+            
+            # Save the image to the pdf_resim field
+            image_path = document_image_directory_path(self, image_filename)
+            image_file = ContentFile(pdf_image)
+            self.pdf_resim.save(image_filename, image_file, save=False)
+
+        # Call the parent class's save method
+        super().save(*args, **kwargs)
+
+    def convert_pdf_to_image(self, pdf_path):
+        # Open the PDF with PyMuPDF (fitz)
+        doc = fitz.open(pdf_path)
+
+        # Get the first page and convert it to a pixmap (image)
+        page = doc.load_page(0)  # Page numbering starts from 0
+        pix = page.get_pixmap()
+
+        # Convert the pixmap to a PNG image
+        img_data = pix.tobytes("png")
+        
+        return img_data
 Madde._meta.verbose_name_plural = "Maddeler"
 BizKimiz._meta.verbose_name_plural = "Biz Kimiz"
 Misyonumuz._meta.verbose_name_plural = "Misyonumuz"
