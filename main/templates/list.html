@@ -203,7 +203,7 @@
                 <tr>
                     <td>{{ forloop.counter }}</td> <!-- Sıra numarası ekleniyor -->
                     <td>{{ dosya.yuklenme_tarihi|date:"Y, F" }}</td> 
-                    <td><a href="{{ dosya.dosya.url }}" target="_blank">{{ dosya.dosya_turu.ad  }}({{ dosya.dosya_turu_sira }}/{{ dosya.dosya_turu.adet }})</a></td>
+                    <td><a href="{{ dosya.dosya.url }}" target="_blank">{{ dosya.olcum_turu.ad  }}({{ dosya.olcum_turu_sira }}/{{ dosya.olcum_turu.adet }})</a></td>
                     <td>{{ dosya.yuklenme_tarihi|date:"d F Y" }}</td>
                 </tr>
                 {% empty %}
