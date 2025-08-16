@@ -34,7 +34,7 @@ from django.utils.dateparse import parse_date
 from datetime import datetime
 from django.utils import timezone
 
-from sirket.models import SirketCalisan
+from sirket.models import SirketCalisan, Sirket
 from django.contrib.auth import logout
 
 def send_custom_email(subject, message, from_email, recipient_list):
@@ -237,13 +237,6 @@ def deneme_page(request):
     return render(request, 'new_documents.html', context=context)
 
 
-
-
-
-
-
-
-
 def contact_page(request):
     if request.method == 'POST':
         print("posta girdin")
@@ -405,13 +398,23 @@ def rotate_image(request, proje_id,image_id):
 @login_required
 def list_page(request):
     try:
-        print("user in list_page", request.user)
-        user=SirketCalisan.objects.get(calisan=request.user)
-        dosyalar = Dosya.objects.filter(sirket=user.sirket) 
+        user=SirketCalisan.objects.filter(calisan=request.user)[0]
+        sirketler=Sirket.objects.filter(calisanlar=request.user)
+        sirket_id = request.GET.get('company_id', '')
+        if sirket_id: 
+            try:
+                aktif_sirket = sirketler.get(id=sirket_id)
+            except Sirket.DoesNotExist:
+                aktif_sirket = sirketler.first()  # yoksa fallback
+        else:  
+            aktif_sirket = sirketler.first()
+        dosyalar = Dosya.objects.filter(sirket=aktif_sirket) 
         dosya_turleri_adet = dosyalar.values('olcum_turu').annotate(adet=models.Count('olcum_turu'))
         context={
             "user":request.user,
             "sirket":user.sirket,
+            "aktif_sirket": aktif_sirket,
+            "sirketler":sirketler,
             "dosyalar":dosyalar,
             "dosya_turleri":dosya_turleri_adet
             }
@@ -424,8 +427,11 @@ def list_page(request):
 
 
 def filter_file(request):
-    user=SirketCalisan.objects.get(calisan=request.user)
-    dosyalar = Dosya.objects.filter(sirket=user.sirket)  # Kullanıcıya ait dosyalar
+    # user = SirketCalisan.objects.get(calisan=request.user)
+    # dosyalar = Dosya.objects.filter(sirket=user.sirket)  # Kullanıcıya ait dosyalar
+    sirket_id = request.GET.get('sirket_id', '')
+    sirket = Sirket.objects.get(id=sirket_id)
+    dosyalar = Dosya.objects.filter(sirket=sirket)
     dosya_adi = request.GET.get('dosya_adi', '').strip()  # Dosya adı filtre parametresi
     daterange = request.GET.get('daterange', '').strip()  # Tarih aralığı filtre parametresi
     start_date = None

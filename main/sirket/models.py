@@ -15,7 +15,7 @@ class SirketCalisan(models.Model):
     class Meta:
         # Ensure that each user can only be associated with one company
         constraints = [
-            models.UniqueConstraint(fields=['calisan'], name='unique_calisan_in_sirket')
+            models.UniqueConstraint(fields=['sirket', 'calisan'], name='uniq_sirket_calisan')
         ]
 
     def __str__(self):

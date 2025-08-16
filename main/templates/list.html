@@ -169,7 +169,14 @@
             <div class="col-md-3">
                 <div class="user-info">
                     <h5>Kullanıcı: {{ user }}</h5>
-                    <p>Şirket: {{ sirket }}</p>
+                    <select id="sirketSecimi" name="sirketSecimi" class="form-select"
+                        onchange="window.location.href='{% url 'customer' %}?company_id=' + this.value;">
+                        {% for sirket in sirketler %}
+                            <option value="{{ sirket.id }}" {% if sirket.id == aktif_sirket.id %}selected{% endif %}>
+                            {{ sirket.ad }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
         </div>
@@ -306,12 +313,14 @@ $(function() {
 });
 function applyFilters() {
     let filterDosyaAdi = document.getElementById("filename").value;
+    let selected_company = document.getElementById("sirketSecimi");
     let filterDateRange = document.getElementById("daterange").value;
 
     $.ajax({
         url: "{% url 'filter_file' %}",  // Sunucu tarafında filter_files url'sine yönlendirecek
         method: "GET",
         data: {
+            sirket_id:selected_company.value,
             dosya_adi: filterDosyaAdi,
             daterange: filterDateRange
         },
